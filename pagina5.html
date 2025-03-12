@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pine Tree Farm - Adicionar Empratados</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Roboto', sans-serif;
+      background-color: #F9F9F9;
+      background: rgba(106, 190, 155, 0.1);
+      background-image: linear-gradient(white, white), linear-gradient(145deg, #FFD700, #6DBF79);
+      background-origin: border-box;
+      background-clip: content-box, border-box;
+      overflow-x: hidden;
+    }
+    .container {
+      position: relative;
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background-image: url("fundo de pagina.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      box-shadow: 0 0 15px rgba(255,215,0,0.6);
+      border: 5px solid transparent;
+      border-radius: 15px;
+      border-image: linear-gradient(90deg, #05bddc, #FFD700) 1;
+    }
+    .form-container {
+      width: 100%;
+      max-width: 700px;
+      background-color: #A5D6A7;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.15);
+      border: 1px solid #ddd;
+      text-align: center;
+      margin-top: 80px;
+    }
+    .form-container h3 {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #00692e;
+      margin-bottom: 30px;
+      border-bottom: 2px solid #05bddc;
+      padding-bottom: 10px;
+    }
+    .question {
+      font-size: 1.8rem;
+      color: #00692e;
+      margin: 40px 0;
+    }
+    .btn-custom {
+      background: linear-gradient(90deg, #05bddc, #00692e);
+      border: none;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      margin: 10px;
+      width: 120px;
+    }
+    .btn-custom:hover {
+      background: linear-gradient(90deg, #00692e, #05bddc);
+      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    }
+    /* Tela de atenção com informações de INVESTIMENTO */
+    #atencao {
+      margin-top: 20px;
+      background-color: #FFF3CD;
+      border: 1px solid #FFEEBA;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: #856404;
+      text-align: left;
+    }
+    /* Carrinho, sempre visível no canto superior direito */
+    #cartContainer {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: #FFD700;
+      color: #000;
+      padding: 10px 15px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #cartContainer span {
+      margin-left: 5px;
+    }
+    @media (max-width: 768px) {
+      #cartContainer {
+        top: 10px;
+        right: 10px;
+        font-size: 1rem;
+      }
+    }
+    /* Container de navegação */
+    .nav-buttons {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Carrinho: exibe o valor total da compra -->
+    <div id="cartContainer">
+      🛒 <span id="cartValue"></span>
+    </div>
+    <div class="form-container">
+      <h3>Adicionar Empratados</h3>
+      <div class="question">Deseja adicionar empratados à sua festa?</div>
+      <!-- Botões "SIM" e "NÃO" -->
+      <div>
+        <button type="button" class="btn-custom" id="btnSim">SIM</button>
+        <button type="button" class="btn-custom" id="btnNao">NÃO</button>
+      </div>
+      <!-- Tela de atenção com informações de INVESTIMENTO -->
+      <div id="atencao">
+        <p><strong>INVESTIMENTO</strong></p>
+        <p>* Festas de 25 pessoas: R$ 575,00</p>
+        <p>* Festas de 25 até 40 pessoas: R$ 800,00</p>
+        <p>* Festas de 40 até 60 pessoas: R$ 1050,00</p>
+      </div>
+    </div>
+    <!-- Container de botões de navegação: somente o botão "Voltar" -->
+    <div class="nav-buttons">
+      <button type="button" class="btn-custom" id="voltarPagina5">Voltar</button>
+    </div>
+  </div>
+
+  <script>
+    // Função para formatar valores no padrão brasileiro
+    function formatCurrency(value) {
+      return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
+    }
+    
+    // Atualiza o carrinho com o total atual
+    var totalEventoCart = parseFloat(localStorage.getItem("totalEventoCart")) || 0;
+    document.getElementById("cartValue").innerText = "Valor total da compra: " + formatCurrency(totalEventoCart);
+
+
+    // Botão "SIM": Calcula o investimento e atualiza as chaves
+    document.getElementById("btnSim").addEventListener("click", function(){
+      // Remove flag anterior para permitir recálculo
+      localStorage.removeItem("empratadosAdded");
+      
+      // Recupera o número de convidados (salvo na Página 3)
+      var numConvidados = parseInt(localStorage.getItem("numeroConvidados")) || 0;
+      var investimento = 0;
+      if(numConvidados <= 25){
+        investimento = 575;
+      } else if(numConvidados <= 40){
+        investimento = 800;
+      } else if(numConvidados <= 60){
+        investimento = 1050;
+      } else {
+        investimento = 1050;
+      }
+      // Salva o valor do investimento na chave "investimentoEmpratados"
+      localStorage.setItem("investimentoEmpratados", investimento.toFixed(2));
+      
+      // Atualiza o total do evento, se ainda não tiver sido adicionado
+      var total = parseFloat(localStorage.getItem("totalEvento")) || 0;
+      if(!localStorage.getItem("empratadosAdded")){
+        total += investimento;
+        localStorage.setItem("totalEvento", total.toFixed(2));
+        localStorage.setItem("empratadosAdded", "true");
+      }
+      
+      localStorage.setItem("cameFrom", "6");
+      window.location.href = "pagina6.html";
+    });
+    
+    // Botão "NÃO": segue para Página 7
+    document.getElementById("btnNao").addEventListener("click", function(){
+      localStorage.setItem("cameFrom", "5");
+      window.location.href = "pagina7.html";
+    });
+
+    // Botão "Voltar": redireciona para a Página 4
+    document.getElementById("voltarPagina5").addEventListener("click", function() {
+      window.location.href = "pagina4.html";
+    });
+  </script>
+</body>
+</html>

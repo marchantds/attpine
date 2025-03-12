@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pine Tree Farm - Decorações</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <style>
+    /* Estilos gerais para cobrir a tela toda */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Roboto', sans-serif;
+      background-color: #F9F9F9;
+      background: rgba(106, 190, 155, 0.1);
+      background-image: linear-gradient(white, white), linear-gradient(145deg, #FFD700, #6DBF79);
+      background-origin: border-box;
+      background-clip: content-box, border-box;
+      overflow-x: hidden;
+    }
+    .container {
+      position: relative;
+      min-height: 100vh;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 1200px;
+      background-color: #fff;
+      background-image: url("fundo de pagina.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      box-shadow: 0 0 15px rgba(255,215,0,0.6);
+      border: 5px solid transparent;
+      border-radius: 15px;
+      border-image: linear-gradient(90deg, #05bddc, #FFD700) 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .title-wrapper {
+      text-align: center;
+    }
+    .page-title {
+      display: inline-block;
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #fff;
+      background-color: #00692e;
+      padding: 5px 15px;
+      border-radius: 30px;
+      margin: 80px auto 20px;
+      text-shadow: 2px 2px 3px rgba(0,0,0,0.2);
+    }
+    .form-container {
+      width: 100%;
+      max-width: 700px;
+      background-color: #A5D6A7;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.15);
+      border: 1px solid #ddd;
+      text-align: center;
+      margin-top: 80px;
+    }
+    .form-container h3 {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #00692e;
+      margin-bottom: 30px;
+      border-bottom: 2px solid #05bddc;
+      padding-bottom: 10px;
+    }
+    .question {
+      font-size: 1.8rem;
+      color: #00692e;
+      margin: 40px 0;
+    }
+    /* Botões customizados para SIM e NÃO */
+    .btn-custom-sim {
+      background: linear-gradient(90deg, #05bddc, #00692e);
+      border: none;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      margin: 10px;
+      width: 120px;
+    }
+    .btn-custom-sim:hover {
+      background: linear-gradient(90deg, #00692e, #05bddc);
+      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    }
+    .btn-custom-nao {
+      background: linear-gradient(90deg, #d9534f, #c9302c);
+      border: none;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      margin: 10px;
+      width: 120px;
+    }
+    .btn-custom-nao:hover {
+      background: linear-gradient(90deg, #c9302c, #d9534f);
+      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    }
+    /* Botões de navegação */
+    .nav-buttons {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 20px;
+    }
+    .btn-custom {
+      background: linear-gradient(90deg, #05bddc, #00692e);
+      border: none;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      margin: 10px;
+      width: 120px;
+    }
+    .btn-custom:hover {
+      background: linear-gradient(90deg, #00692e, #05bddc);
+      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    }
+    /* Carrinho */
+    #cartContainer {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: #FFD700;
+      color: #000;
+      padding: 10px 15px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #cartContainer span {
+      margin-left: 5px;
+    }
+    @media (max-width:768px) {
+      #cartContainer {
+        top: 10px;
+        right: 10px;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Carrinho -->
+    <div id="cartContainer">
+      🛒 <span id="cartValue"></span>
+    </div>
+    <div class="title-wrapper">
+      <div class="page-title">Decorações</div>
+    </div>
+    <div class="form-container">
+      <h3>Decorações</h3>
+      <div class="question">Deseja adicionar decorações ao evento?</div>
+      <div>
+        <button type="button" class="btn-custom-sim" id="btnSim">SIM</button>
+        <button type="button" class="btn-custom-nao" id="btnNao">NÃO</button>
+      </div>
+    </div>
+    <!-- Container de navegação -->
+    <div class="nav-buttons">
+      <button type="button" class="btn-custom" id="voltarPage9">Voltar</button>
+    </div>
+  </div>
+  
+  <script>
+    // Função para formatar valores conforme o padrão "R$1.234,56"
+    function formatCurrency(value) {
+      return "R$" + Number(value).toLocaleString("pt-BR", { minimumFractionDigits: 2 });
+    }
+    
+    // Atualiza o carrinho com o valor total armazenado (já calculado nas páginas anteriores)
+    var cameFrom = localStorage.getItem("cameFrom");
+  if (cameFrom === "8") {
+    // Recupera o valor da página 7 (totalCompra)
+    var totalCompra = parseFloat(localStorage.getItem("totalCompra")) || 0;
+    // Recupera os itens de bebidas da página 8
+    var selectedBeverages = JSON.parse(localStorage.getItem("selectedBeverages") || "[]");
+    // Calcula o total das bebidas
+    var beveragesTotal = selectedBeverages.reduce(function(sum, item) {
+       return sum + (item.unitPrice * item.quantity);
+        }, 0);
+        // Calcula a soma final
+        var somaTotal = totalCompra + beveragesTotal;
+      // Exibe o valor no carrinho
+      document.getElementById("cartValue").innerText = "Valor total da compra: " + formatCurrency(somaTotal);
+      // Armazena o resultado final na nova chave "totalFinal"
+      localStorage.setItem("totalFinal", somaTotal.toFixed(2));
+    } else {
+      var totalCompra = parseFloat(localStorage.getItem("totalCompra")) || 0;
+      document.getElementById("cartValue").innerText = "Valor total da compra: " + formatCurrency(totalCompra);
+      localStorage.setItem("totalFinal", totalCompra.toFixed(2));
+    }
+    
+    // Botão SIM (vai para a página 10) e salva a origem usando a chave "cameFrom"
+    document.getElementById("btnSim").addEventListener("click", function(){
+      localStorage.setItem("cameFrom", "9");
+      window.location.href = "pagina10.html";
+    });
+    
+    // Botão NÃO (vai diretamente para a página 11) e salva a origem usando a chave "cameFrom"
+    document.getElementById("btnNao").addEventListener("click", function(){
+      localStorage.setItem("cameFrom", "9");
+      window.location.href = "pagina11.html";
+    });
+    
+    // Configuração do botão "Voltar":
+    // Se "cameFrom" estiver definida como "8", o usuário veio pela página 8 e deve voltar para a página 8;
+    // caso contrário, volta para a página 7.
+    var cameFrom = localStorage.getItem("cameFrom");
+    console.log("cameFrom:", cameFrom); // para depuração
+    var voltarBtn = document.getElementById("voltarPage9");
+    if (cameFrom === "8") {
+      voltarBtn.addEventListener("click", function(){
+        window.location.href = "pagina8.html"; // Volta para a página 8
+      });
+    } else {
+      voltarBtn.addEventListener("click", function(){
+        window.location.href = "pagina7.html"; // Volta para a página 7
+      });
+    }
+  </script>
+</body>
+</html>
+

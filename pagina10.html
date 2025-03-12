@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pine Tree Farm - Decorações</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <style>
+    /* Estilos gerais */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Roboto', sans-serif;
+      background-color: #F9F9F9;
+      background: rgba(106, 190, 155, 0.1);
+      background-image: linear-gradient(white, white), linear-gradient(145deg, #FFD700, #6DBF79);
+      background-origin: border-box;
+      background-clip: content-box, border-box;
+      overflow-x: hidden;
+    }
+    .container {
+      position: relative;
+      min-height: 100vh;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 1200px;
+      background-color: #fff;
+      background-image: url("fundo de pagina.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      box-shadow: 0 0 15px rgba(255,215,0,0.6);
+      border: 5px solid transparent;
+      border-radius: 15px;
+      border-image: linear-gradient(90deg, #05bddc, #FFD700) 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .title-wrapper {
+      text-align: center;
+      width: 100%;
+    }
+    /* Título da página */
+    .page-title {
+      display: inline-block;
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #fff;
+      background-color: #00692e;
+      padding: 5px 15px;
+      border-radius: 30px;
+      margin: 80px auto 20px;
+      text-shadow: 2px 2px 3px rgba(0,0,0,0.2);
+    }
+    /* Tela de atenção */
+    #atencao {
+      background-color: #FFF3CD;
+      border: 1px solid #FFEEBA;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: #856404;
+      text-align: left;
+      max-width: 90%;
+      margin: 0 auto 20px;
+    }
+    /* Grid para os itens de decoração */
+    .row {
+      margin-top: 20px;
+      width: 100%;
+    }
+    .decoration-item {
+      margin-bottom: 40px;
+      text-align: center;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      transition: border 0.3s ease;
+      position: relative;
+    }
+    .decoration-item.selected {
+      border: 3px solid #FFD700;
+    }
+    /* Container dos uploads */
+    .uploads {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .photo-upload {
+      width: 300px;
+      height: 300px;
+      border: 2px dashed #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #00692e;
+      border-radius: 8px;
+    }
+    .photo-upload span {
+      color: #fff;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+    .decoration-name {
+      font-size: 1.2rem;
+      font-weight: bold;
+      background-color: #00692e;
+      color: #fff;
+      padding: 8px;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+    .decoration-price {
+      background-color: #FFD700;
+      color: #000;
+      padding: 8px;
+      font-weight: bold;
+      border-radius: 5px;
+      margin-top: 10px;
+      font-size: 1.1rem;
+    }
+    .description-balloon {
+      background-color: #FFF3CD;
+      border: 1px solid #FFEEBA;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: #856404;
+      margin-top: 10px;
+      text-align: left;
+      max-width: 90%;
+    }
+    /* Botões de navegação */
+    .nav-buttons {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 20px;
+    }
+    .btn-custom {
+      background: linear-gradient(90deg, #05bddc, #00692e);
+      border: none;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      width: 200px;
+    }
+    .btn-custom:hover {
+      background: linear-gradient(90deg, #00692e, #05bddc);
+      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    }
+    /* Carrinho */
+    #cartContainer {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: #FFD700;
+      color: #000;
+      padding: 10px 15px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #cartContainer span {
+      margin-left: 5px;
+    }
+    @media (max-width:768px) {
+      #cartContainer {
+        top: 10px;
+        right: 10px;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Carrinho -->
+    <div id="cartContainer">
+      🛒 <span id="cartValue"></span>
+    </div>
+    
+    <!-- Título -->
+    <div class="title-wrapper">
+      <div class="page-title">Decorações</div>
+    </div>
+    
+    <!-- Tela de atenção -->
+    <div id="atencao">
+      Atenção: Você pode escolher apenas 1 decoração.
+    </div>
+    
+    <!-- Grid de itens de decoração -->
+    <div class="row">
+      <!-- BOSQUE PEQUENO -->
+      <div class="col-md-6 decoration-item" data-decoration="Bosque Pequeno" data-price="750">
+        <div class="uploads">
+          <div class="photo-upload"><span>Foto 1</span></div>
+          <div class="photo-upload"><span>Foto 2</span></div>
+          <div class="photo-upload"><span>Foto 3</span></div>
+        </div>
+        <div class="decoration-name">BOSQUE PEQUENO</div>
+        <div class="decoration-price">Preço: R$ 750,00</div>
+        <div class="description-balloon">
+          1 PAINEL SUBLIMADO<br>
+          1 TRIO DE CILINDROS<br>
+          2 ÀRVORES<br>
+          10 PEÇAS DECORATIVAS<br>
+          ANIMAIS E LOUÇAS PARA BOLO E DOCES<br>
+          1 TAPETE<br>
+          1 ESTRUTURA DE MESA<br>
+          MONTAGEM E DESMONTAGEM<br>
+          (Não incluem os balões)
+        </div>
+      </div>
+      
+      <!-- BOSQUE MÉDIO -->
+      <div class="col-md-6 decoration-item" data-decoration="Bosque Médio" data-price="900">
+        <div class="uploads">
+          <div class="photo-upload"><span>Foto 1</span></div>
+          <div class="photo-upload"><span>Foto 2</span></div>
+          <div class="photo-upload"><span>Foto 3</span></div>
+        </div>
+        <div class="decoration-name">BOSQUE MÉDIO</div>
+        <div class="decoration-price">Preço: R$ 900,00</div>
+        <div class="description-balloon">
+          2 PAINÉIS SUBLIMADOS<br>
+          1 TRIO DE CILINDROS<br>
+          10 PEÇAS DECORATIVAS<br>
+          ANIMAIS E LOUÇAS PARA BOLO E DOCES<br>
+          1 ESTRUTURA DE MESA<br>
+          1 TAPETE<br>
+          MONTAGEM E DESMONTAGEM<br>
+          (Não incluem os balões)
+        </div>
+      </div>
+      
+      <!-- BOSQUE GRANDE -->
+      <div class="col-md-6 decoration-item" data-decoration="Bosque Grande" data-price="1500">
+        <div class="uploads">
+          <div class="photo-upload"><span>Foto 1</span></div>
+          <div class="photo-upload"><span>Foto 2</span></div>
+          <div class="photo-upload"><span>Foto 3</span></div>
+        </div>
+        <div class="decoration-name">BOSQUE GRANDE</div>
+        <div class="decoration-price">Preço: R$ 1.500,00</div>
+        <div class="description-balloon">
+          4 PAINÉIS SUBLIMADOS OU EM MDF<br>
+          4 ÀRVORES<br>
+          2 TRIOS DE CILINDROS DE CADA<br>
+          15 PEÇAS DECORATIVAS<br>
+          ANIMAIS E LOUÇAS PARA BOLO E DOCES<br>
+          1 TAPETE<br>
+          1 ESTRUTURA DE MESA<br>
+          MONTAGEM E DESMONTAGEM<br>
+          (Não incluem os balões)
+        </div>
+      </div>
+      
+      <!-- PRINCESAS -->
+      <div class="col-md-6 decoration-item" data-decoration="Princesas" data-price="950">
+        <div class="uploads">
+          <div class="photo-upload"><span>Foto 1</span></div>
+          <div class="photo-upload"><span>Foto 2</span></div>
+          <div class="photo-upload"><span>Foto 3</span></div>
+        </div>
+        <div class="decoration-name">PRINCESAS</div>
+        <div class="decoration-price">Preço: R$ 950,00</div>
+        <div class="description-balloon">
+          1 PAINÉL SUBLIMADO OU EM MDF<br>
+          1 TRIO DE CILINDROS<br>
+          10 PEÇAS DECORATIVAS<br>
+          LOUÇAS PARA BOLO E DOCES<br>
+          1 TAPETE<br>
+          1 ESTRUTURA DE MESA<br>
+          1 LOUSA<br>
+          MONTAGEM E DESMONTAGEM<br>
+          (Não incluem os balões)
+        </div>
+      </div>
+      
+      <!-- FAZENDINHA -->
+      <div class="col-md-6 decoration-item" data-decoration="Fazendinha" data-price="950">
+        <div class="uploads">
+          <div class="photo-upload"><span>Foto 1</span></div>
+          <div class="photo-upload"><span>Foto 2</span></div>
+          <div class="photo-upload"><span>Foto 3</span></div>
+        </div>
+        <div class="decoration-name">FAZENDINHA</div>
+        <div class="decoration-price">Preço: R$ 950,00</div>
+        <div class="description-balloon">
+          1 PAINÉL SUBLIMADO - CELEIRO<br>
+          1 TRIO DE CILINDROS<br>
+          10 PEÇAS DECORATIVAS<br>
+          ANIMAIS E LOUÇAS PARA BOLO E DOCES<br>
+          1 ESTRUTURA DE MESA<br>
+          1 TAPETE<br>
+          MONTAGEM E DESMONTAGEM<br>
+          (Não incluem os balões)
+        </div>
+      </div>
+      
+      <!-- HARRY POTTER -->
+      <div class="col-md-6 decoration-item" data-decoration="Harry Potter" data-price="1000">
+        <div class="uploads">
+          <div class="photo-upload"><span>Foto 1</span></div>
+          <div class="photo-upload"><span>Foto 2</span></div>
+          <div class="photo-upload"><span>Foto 3</span></div>
+        </div>
+        <div class="decoration-name">HARRY POTTER</div>
+        <div class="decoration-price">Preço: R$ 1.000,00</div>
+        <div class="description-balloon">
+          1 PAINÉL SUBLIMADO<br>
+          1 TRIO DE CILINDROS<br>
+          10 PEÇAS DECORATIVAS<br>
+          LOUÇAS PARA BOLO E DOCES<br>
+          1 ESTRUTURA DE MESA<br>
+          1 TAPETE<br>
+          1 GAIOLA<br>
+          1 PORTAL 3/4 - PAINÉL<br>
+          1 LOUSA<br>
+          MONTAGEM E DESMONTAGEM<br>
+          (Não incluem os balões)
+        </div>
+      </div>
+    </div>
+    
+    <!-- Botões de navegação -->
+    <div class="nav-buttons">
+      <button type="button" class="btn-custom" id="voltarPage10">Voltar</button>
+      <button type="button" class="btn-custom" id="proximo">Próximo</button>
+    </div>
+  </div>
+  
+  <script>
+    // Função para formatar valores para o padrão brasileiro (ex.: R$1.234,56)
+    function formatCurrency(value) {
+      return "R$" + Number(value).toLocaleString("pt-BR", { minimumFractionDigits: 2 });
+    }
+    
+    // Exibe o valor do carrinho (valor base salvo no localStorage)
+    var totalFinal = parseFloat(localStorage.getItem("totalFinal")) || 0;
+    document.getElementById("cartValue").innerText = "Valor total da compra: " + formatCurrency(totalFinal);
+    
+    // Salva o valor base do carrinho, sem a decoração, se ainda não estiver salvo
+    if (!localStorage.getItem("baseDecorationTotal")) {
+      localStorage.setItem("baseDecorationTotal", total.toFixed(2));
+    }
+    
+    // Adiciona comportamento clicável para os itens de decoração
+    var decorationItems = document.querySelectorAll(".decoration-item");
+    decorationItems.forEach(function(item) {
+      item.addEventListener("click", function() {
+        // Remove a seleção de todos os itens (apenas 1 pode ser escolhido)
+        decorationItems.forEach(function(i) {
+          i.classList.remove("selected");
+        });
+        // Seleciona o item clicado
+        item.classList.add("selected");
+        // Obtém o nome, preço e atualiza a escolha no localStorage
+        var selectedDecoration = item.getAttribute("data-decoration");
+        var decorationPrice = parseFloat(item.getAttribute("data-price"));
+        localStorage.setItem("selectedDecoration", selectedDecoration);
+        
+        // Atualiza o carrinho: soma o preço da decoração ao valor base (baseDecorationTotal)
+        var baseTotal = parseFloat(localStorage.getItem("baseDecorationTotal"));
+        var newTotal = baseTotal + decorationPrice;
+        localStorage.setItem("totalEvento", newTotal.toFixed(2));
+        document.getElementById("cartValue").innerText = "Valor total da compra: " + formatCurrency(newTotal);
+        
+        // Salva o preço da decoração selecionada
+        localStorage.setItem("decorationPriceAdded", decorationPrice);
+      });
+    });
+    
+    // Configuração dos botões de navegação com verificação do modo edição
+    window.onload = function() {
+      var editMode = localStorage.getItem("edit_decoracao");
+      if (editMode === "true") {
+        // Modo edição: "Voltar" retorna para a Página 11 e "Próximo" atua como "Salvar"
+        document.getElementById("voltarPage10").addEventListener("click", function() {
+          window.location.href = "pagina11.html";
+        });
+        document.getElementById("proximo").innerText = "Salvar";
+        document.getElementById("proximo").addEventListener("click", function() {
+          localStorage.removeItem("edit_decoracao");
+          window.location.href = "pagina11.html";
+        });
+      } else {
+        // Fluxo normal: "Voltar" retorna para a Página 9 e "Próximo" direciona para a Página 11
+        document.getElementById("voltarPage10").addEventListener("click", function() {
+          window.location.href = "pagina9.html";
+        });
+        document.getElementById("proximo").addEventListener("click", function() {
+          localStorage.setItem("cameFrom", "10");
+          window.location.href = "pagina11.html";
+        });
+      }
+    };
+  </script>
+</body>
+</html>

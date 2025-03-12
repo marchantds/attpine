@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pine Tree Farm - Resumo do Pedido</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <style>
+    :root {
+      --bg-resumo: #F0F0F0;
+      --bg-cardapio: #F0F0F0;
+      --color-primary: #00692e;
+      --color-border: #ddd;
+      --table-header-bg: #e2e2e2;
+      --table-header-color: #333;
+      --text-color: #333;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Roboto', sans-serif;
+      background-color: #F9F9F9;
+      background-image: linear-gradient(white, white), linear-gradient(145deg, #FFD700, #6DBF79);
+      background-clip: content-box, border-box;
+      overflow-x: hidden;
+    }
+    .container {
+      position: relative;
+      min-height: 100vh;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 1200px;
+      background-color: #ffffff;
+      background-image: url("fundo de pagina.png");
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 0 15px rgba(255,215,0,0.6);
+      border: 5px solid transparent;
+      border-radius: 15px;
+      border-image: linear-gradient(90deg, #05bddc, #FFD700) 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .page-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .page-header h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #fff;
+      background-color: var(--color-primary);
+      padding: 10px 20px;
+      border-radius: 30px;
+      margin: 0 auto;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .section {
+      width: 100%;
+      max-width: 800px;
+      background-color: var(--bg-resumo);
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border: 1px solid var(--color-border);
+      position: relative;
+    }
+    .section h4 {
+      font-size: 1.8rem;
+      color: var(--color-primary);
+      border-bottom: 2px solid var(--color-primary);
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+    .summary-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 15px;
+    }
+    .summary-table th,
+    .summary-table td {
+      border: 1px solid var(--color-border);
+      padding: 10px;
+      text-align: left;
+      font-size: 1rem;
+      color: var(--text-color);
+    }
+    .summary-table th {
+      background-color: var(--table-header-bg);
+      color: var(--table-header-color);
+      font-weight: bold;
+    }
+    .total-display {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--color-primary);
+      text-align: center;
+      margin-top: 15px;
+    }
+    .btn-custom {
+      background: linear-gradient(90deg, #05bddc, var(--color-primary));
+      border: none;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      width: 200px;
+      margin: 20px auto 0;
+      display: block;
+    }
+    .btn-custom:hover {
+      background: linear-gradient(90deg, var(--color-primary), #05bddc);
+      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    }
+    .nav-buttons {
+      margin-top: 20px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .action-buttons {
+      margin-top: 10px;
+      text-align: right;
+    }
+    .btn-editar, .btn-remover {
+      padding: 6px 12px;
+      font-size: 0.9rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-left: 5px;
+      transition: background 0.3s ease;
+    }
+    .btn-editar {
+      background: linear-gradient(90deg, #05bddc, var(--color-primary));
+      color: #fff;
+    }
+    .btn-editar:hover {
+      background: linear-gradient(90deg, var(--color-primary), #05bddc);
+    }
+    .btn-remover {
+      background: linear-gradient(90deg, #d9534f, #c9302c);
+      color: #fff;
+    }
+    .btn-remover:hover {
+      background: linear-gradient(90deg, #c9302c, #d9534f);
+    }
+    .cardapio-section {
+      width: 100%;
+      max-width: 800px;
+      background-color: var(--bg-cardapio);
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.15);
+      border: 1px solid var(--color-border);
+    }
+    .cardapio-section h4 {
+      font-size: 1.8rem;
+      color: var(--color-primary);
+      border-bottom: 2px solid var(--color-primary);
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+    .cardapio-list {
+      list-style: none;
+      padding: 0;
+    }
+    .cardapio-list li {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      padding: 5px;
+      background-color: var(--bg-cardapio);
+      border: 1px solid var(--color-border);
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Título principal -->
+    <div class="page-header">
+      <h1>Resumo do evento</h1>
+    </div>
+    
+    <!-- 1) Dados Preliminares do Evento -->
+    <div class="section" id="dadosPreliminares">
+      <h4>Dados Preliminares do Evento</h4>
+      <table class="summary-table">
+        <tr>
+          <th>Nome do(a) responsável</th>
+          <td id="nomeResponsavelRes"></td>
+        </tr>
+        <tr>
+          <th>Nome d(a) aniversariante</th>
+          <td id="aniversarianteRes"></td>
+        </tr>
+        <tr>
+          <th>Data de nascimento do(a) aniversariante</th>
+          <td id="dataNascimentoRes"></td>
+        </tr>
+        <tr>
+          <th>Data do Evento</th>
+          <td id="dataEventoRes"></td>
+        </tr>
+        <tr>
+          <th>Horário do evento</th>
+          <td id="horarioEventoRes"></td>
+        </tr>
+      </table>
+      <div class="action-buttons">
+        <button class="btn-editar" id="editarPreliminares">Editar</button>
+      </div>
+    </div>
+    
+    <!-- 2) Dados Complementares do Evento -->
+    <div class="section" id="dadosComplementares">
+      <h4>Dados Complementares do Evento</h4>
+      <table class="summary-table">
+        <tr>
+          <th>Nome do Responsável 1</th>
+          <td id="nomeResponsavel1CompRes"></td>
+        </tr>
+        <tr>
+          <th>Telefone do Responsável 1</th>
+          <td id="telefone1CompRes"></td>
+        </tr>
+        <tr>
+          <th>Nome do Responsável 2</th>
+          <td id="nomeResponsavel2CompRes"></td>
+        </tr>
+        <tr>
+          <th>Telefone do Responsável 2</th>
+          <td id="telefone2CompRes"></td>
+        </tr>
+        <tr>
+          <th>E-mail</th>
+          <td id="emailCompRes"></td>
+        </tr>
+        <tr>
+          <th>CEP (somente números)</th>
+          <td id="cepCompRes"></td>
+        </tr>
+        <tr>
+          <th>Logradouro</th>
+          <td id="logradouroCompRes"></td>
+        </tr>
+        <tr>
+          <th>Bairro</th>
+          <td id="bairroCompRes"></td>
+        </tr>
+        <tr>
+          <th>Cidade</th>
+          <td id="cidadeCompRes"></td>
+        </tr>
+        <tr>
+          <th>Estado</th>
+          <td id="estadoCompRes"></td>
+        </tr>
+        <tr>
+          <th>Número da Residência</th>
+          <td id="numeroResidenciaCompRes"></td>
+        </tr>
+        <tr>
+          <th>Complemento</th>
+          <td id="complementoCompRes"></td>
+        </tr>
+        <tr>
+          <th>Idade que o(a) aniversariante completará</th>
+          <td id="idadeCompRes"></td>
+        </tr>
+      </table>
+      <div class="action-buttons">
+        <button class="btn-editar" id="editarComplementares">Editar</button>
+      </div>
+    </div>
+    
+    <!-- 3) Número de Convidados -->
+    <div class="section" id="convidadosSection">
+      <h4>Número de Convidados</h4>
+      <table class="summary-table">
+        <tr>
+          <th>Número de Convidados</th>
+          <td id="numeroConvidadosRes"></td>
+        </tr>
+        <tr>
+          <th>Preço por Pessoa</th>
+          <td id="pricePerPersonRes"></td>
+        </tr>
+        <tr>
+          <th>Total (Convidados)</th>
+          <td id="totalConvidadosRes"></td>
+        </tr>
+      </table>
+      <div id="clausulasRes"></div>
+      <div class="action-buttons">
+        <button class="btn-editar" id="editarConvidados">Editar</button>
+        <button class="btn-remover" id="removerConvidados">Remover</button>
+      </div>
+    </div>
+    
+    <!-- 4) Opções do Cardápio -->
+    <div class="cardapio-section" id="cardapioSection">
+      <h4>Opções do Cardápio</h4>
+      <ul id="cardapioList" class="cardapio-list">
+      </ul>
+      <div class="action-buttons">
+        <button class="btn-editar" id="editarCardapio">Editar</button>
+        <button class="btn-remover" id="removerCardapio">Remover</button>
+      </div>
+    </div>
+    
+    <!-- 5) Empratados -->
+    <div class="section" id="empratadosSection">
+      <h4>Empratados</h4>
+      <table class="summary-table" id="empratadosTable">
+        <tbody>
+        </tbody>
+      </table>
+      <div class="action-buttons">
+        <button class="btn-editar" id="editarEmpratados">Editar</button>
+        <button class="btn-remover" id="removerEmpratados">Remover</button>
+      </div>
+    </div>
+    
+    <!-- 6) Bebidas -->
+    <div class="section" id="bebidasSection">
+      <h4>Bebidas</h4>
+      <table class="summary-table" id="bebidasTable">
+        <thead>
+          <tr>
+            <th>Produto</th>
+            <th>Preço Unitário</th>
+            <th>Quantidade</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+      <div class="action-buttons">
+        <button class="btn-editar" id="editarBebidas">Editar</button>
+        <button class="btn-remover" id="removerBebidas">Remover</button>
+      </div>
+    </div>
+    
+    <!-- 7) Decoração -->
+    <div class="section" id="decoracaoSection">
+      <h4>Decoração</h4>
+      <table class="summary-table">
+        <tr>
+          <th>Decoração Selecionada</th>
+          <td id="selectedDecorationRes"></td>
+        </tr>
+        <tr>
+          <th>Preço da Decoração</th>
+          <td id="decorationPriceRes"></td>
+        </tr>
+      </table>
+      <div class="action-buttons">
+        <button class="btn-editar" id="editarDecoracao">Editar</button>
+        <button class="btn-remover" id="removerDecoracao">Remover</button>
+      </div>
+    </div>
+    
+    <!-- 8) Total do Evento -->
+    <div class="section" id="totalSection">
+      <h4>Total do Evento</h4>
+      <div class="total-display" id="totalEventoRes"></div>
+      <div class="action-buttons"></div>
+    </div>
+    
+    <!-- Botão de Finalizar Pedido -->
+    <div class="nav-buttons">
+      <button type="button" class="btn-custom" id="finalizar">Finalizar Pedido</button>
+    </div>
+  </div>
+  
+  <script>
+    function formatCurrency(value) {
+      return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
+    }
+    
+    function parseCurrency(text) {
+      let numeric = text.replace(/R\$\s?/, '').replace(/\./g, '').replace(',', '.');
+      return parseFloat(numeric) || 0;
+    }
+    
+    function updateTotalEvento() {
+      const totalConvidadosText = document.getElementById("totalConvidadosRes").innerText;
+      const totalConvidados = parseCurrency(totalConvidadosText);
+      
+      const investimentoCell = document.getElementById("investimentoEmpratadosRes");
+      const investimentoEmpratados = investimentoCell ? parseCurrency(investimentoCell.innerText) : 0;
+      
+      let totalBebidas = 0;
+      const bebidasRows = document.querySelectorAll("#bebidasTable tbody tr");
+      bebidasRows.forEach(row => {
+        const totalCell = row.cells[3];
+        if (totalCell) {
+          totalBebidas += parseCurrency(totalCell.innerText);
+        }
+      });
+      
+      const decoracaoText = document.getElementById("decorationPriceRes").innerText;
+      const totalDecoracao = parseCurrency(decoracaoText);
+      
+      const novoTotal = totalConvidados + totalBebidas + investimentoEmpratados + totalDecoracao;
+      
+      document.getElementById("totalEventoRes").innerText = formatCurrency(novoTotal);
+      localStorage.setItem("totalEvento", novoTotal.toFixed(2));
+    }
+    
+    const nomeResponsavel = localStorage.getItem('nomeResponsavel') || "";
+    const aniversariante = localStorage.getItem('aniversariante') || "";
+    const dataNascimento = localStorage.getItem('dataNascimento') || "";
+    const dataEvento = localStorage.getItem('dataEvento') || "";
+    const horarioEvento = localStorage.getItem('horarioEvento') || "";
+    
+    const telefone1Detalhado = localStorage.getItem('telefone1Detalhado') || "";
+    const telefone2Detalhado = localStorage.getItem('telefone2Detalhado') || "";
+    const emailDetalhado = localStorage.getItem('emailDetalhado') || "";
+    const cepDetalhado = localStorage.getItem('cepDetalhado') || "";
+    const logradouroDetalhado = localStorage.getItem('logradouroDetalhado') || "";
+    const bairroDetalhado = localStorage.getItem('bairroDetalhado') || "";
+    const cidadeDetalhado = localStorage.getItem('cidadeDetalhado') || "";
+    const estadoDetalhado = localStorage.getItem('estadoDetalhado') || "";
+    const numeroResidenciaDetalhado = localStorage.getItem('numeroResidenciaDetalhado') || "";
+    const complementoDetalhado = localStorage.getItem('complementoDetalhado') || "";
+    const idadeDetalhado = localStorage.getItem('idadeDetalhado') || "";
+    
+    const nomeResponsavel2bDetalhado = localStorage.getItem('nomeResponsavel2bDetalhado') || "";
+    
+    const numeroConvidados = localStorage.getItem('numeroConvidados') || "";
+    const pricePerPerson = localStorage.getItem('pricePerPerson') || "";
+    const totalConvidadosStored = parseFloat(localStorage.getItem('totalConvidados')) || 0;
+    const clausulasText = localStorage.getItem('clausulasText') || "";
+    
+    const selectedBeverages = JSON.parse(localStorage.getItem('selectedBeverages') || "[]");
+    const selectedEmpratados = JSON.parse(localStorage.getItem('selectedEmpratados') || "[]");
+    const selectedDecoration = localStorage.getItem('selectedDecoration') || "";
+    const decorationPrice = parseFloat(localStorage.getItem('decorationPriceAdded') || "0");
+    const selectedOptions = JSON.parse(localStorage.getItem('selectedOptions') || "[]");
+    
+    const investimentoEmpratados = parseFloat(localStorage.getItem("investimentoEmpratados")) || 0;
+    
+    const cameFrom = localStorage.getItem("cameFrom") || "";
+    let totalCart = 0;
+    if (cameFrom === "10") {
+      totalCart = parseFloat(localStorage.getItem("totalEventoPage10")) || 0;
+    } else if (cameFrom === "9") {
+      totalCart = parseFloat(localStorage.getItem("totalEventoPage9")) || 0;
+    } else {
+      totalCart = parseFloat(localStorage.getItem("totalEvento")) || 0;
+    }
+    
+    document.getElementById("nomeResponsavelRes").innerText = nomeResponsavel;
+    document.getElementById("aniversarianteRes").innerText = aniversariante;
+    document.getElementById("dataNascimentoRes").innerText = dataNascimento;
+    document.getElementById("dataEventoRes").innerText = dataEvento;
+    document.getElementById("horarioEventoRes").innerText = horarioEvento;
+    
+    document.getElementById("nomeResponsavel1CompRes").innerText = nomeResponsavel;
+    document.getElementById("telefone1CompRes").innerText = telefone1Detalhado;
+    document.getElementById("nomeResponsavel2CompRes").innerText = nomeResponsavel2bDetalhado;
+    document.getElementById("telefone2CompRes").innerText = telefone2Detalhado;
+    document.getElementById("emailCompRes").innerText = emailDetalhado;
+    document.getElementById("cepCompRes").innerText = cepDetalhado;
+    document.getElementById("logradouroCompRes").innerText = logradouroDetalhado;
+    document.getElementById("bairroCompRes").innerText = bairroDetalhado;
+    document.getElementById("cidadeCompRes").innerText = cidadeDetalhado;
+    document.getElementById("estadoCompRes").innerText = estadoDetalhado;
+    document.getElementById("numeroResidenciaCompRes").innerText = numeroResidenciaDetalhado;
+    document.getElementById("complementoCompRes").innerText = complementoDetalhado;
+    document.getElementById("idadeCompRes").innerText = idadeDetalhado;
+    
+    document.getElementById("numeroConvidadosRes").innerText = numeroConvidados;
+    document.getElementById("pricePerPersonRes").innerText = formatCurrency(pricePerPerson);
+    document.getElementById("totalConvidadosRes").innerText = formatCurrency(totalConvidadosStored);
+    document.getElementById("clausulasRes").innerHTML = clausulasText;
+    
+    const bebidasTableBody = document.querySelector("#bebidasTable tbody");
+    selectedBeverages.forEach((item) => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${item.name}</td>
+        <td>${formatCurrency(item.unitPrice)}</td>
+        <td>${item.quantity}</td>
+        <td>${formatCurrency(item.unitPrice * item.quantity)}</td>
+      `;
+      bebidasTableBody.appendChild(tr);
+    });
+    
+    const empratadosTableBody = document.getElementById("empratadosTable").querySelector("tbody");
+    if (selectedEmpratados.length > 0) {
+      selectedEmpratados.forEach(item => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${item}</td><td></td>`;
+        empratadosTableBody.appendChild(tr);
+      });
+    } else {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td colspan="2">Nenhum empratado selecionado</td>`;
+      empratadosTableBody.appendChild(tr);
+    }
+    if (investimentoEmpratados > 0) {
+      const trInvestimento = document.createElement("tr");
+      trInvestimento.innerHTML = `<td>Investimento Empratados</td><td id="investimentoEmpratadosRes">${formatCurrency(investimentoEmpratados)}</td>`;
+      empratadosTableBody.appendChild(trInvestimento);
+    }
+    
+    document.getElementById("selectedDecorationRes").innerText = selectedDecoration;
+    document.getElementById("decorationPriceRes").innerText = formatCurrency(decorationPrice);
+    
+    const cardapioList = document.getElementById("cardapioList");
+    if (selectedOptions.length > 0) {
+      selectedOptions.forEach(option => {
+        const li = document.createElement("li");
+        li.innerText = option;
+        cardapioList.appendChild(li);
+      });
+    } else {
+      cardapioList.innerHTML = "<li>Nenhuma opção selecionada</li>";
+    }
+    
+    document.getElementById("totalEventoRes").innerText = formatCurrency(totalCart);
+    
+    updateTotalEvento();
+    
+    document.getElementById("finalizar").addEventListener("click", function() {
+      window.location.href = "confirmacao.html";
+    });
+    
+    document.getElementById("editarPreliminares").addEventListener("click", function() {
+      localStorage.setItem("edit_preliminares", "true");
+      window.location.href = "index.html";
+    });
+    document.getElementById("editarComplementares").addEventListener("click", function() {
+      console.log("Editar Complementares clicado");
+      localStorage.setItem("edit_complementares", "true");
+      window.location.href = "pagina2.html";
+    });
+    document.getElementById("editarConvidados").addEventListener("click", function() {
+      localStorage.setItem("edit_numConvidados", "true");
+      window.location.href = "pagina3.html";
+    });
+    document.getElementById("editarCardapio").addEventListener("click", function() {
+      localStorage.setItem("edit_cardapio", "true");
+      window.location.href = "pagina4.html";
+    });
+    document.getElementById("editarEmpratados").addEventListener("click", function() {
+      localStorage.setItem("edit_empratados", "true");
+      window.location.href = "pagina6.html";
+    });
+    document.getElementById("editarBebidas").addEventListener("click", function() {
+      localStorage.setItem("edit_bebidas", "true");
+      window.location.href = "pagina8.html";
+    });
+    document.getElementById("editarDecoracao").addEventListener("click", function() {
+      localStorage.setItem("edit_decoracao", "true");
+      window.location.href = "pagina10.html";
+    });
+    
+    document.getElementById("removerConvidados").addEventListener("click", function() {
+      localStorage.removeItem("numeroConvidados");
+      localStorage.removeItem("pricePerPerson");
+      localStorage.removeItem("totalConvidados");
+      localStorage.removeItem("clausulasText");
+      document.getElementById("numeroConvidadosRes").innerText = "";
+      document.getElementById("pricePerPersonRes").innerText = "";
+      document.getElementById("totalConvidadosRes").innerText = "";
+      document.getElementById("clausulasRes").innerHTML = "";
+      updateTotalEvento();
+    });
+    
+    document.getElementById("removerCardapio").addEventListener("click", function() {
+      localStorage.removeItem("selectedOptions");
+      document.getElementById("cardapioList").innerHTML = "<li>Nenhuma opção selecionada</li>";
+      updateTotalEvento();
+    });
+    
+    document.getElementById("removerEmpratados").addEventListener("click", function() {
+      localStorage.removeItem("selectedEmpratados");
+      localStorage.removeItem("investimentoEmpratados");
+      document.getElementById("empratadosTable").querySelector("tbody").innerHTML = "<tr><td colspan='2'>Nenhum empratado selecionado</td></tr>";
+      updateTotalEvento();
+    });
+    
+    document.getElementById("removerBebidas").addEventListener("click", function() {
+      localStorage.removeItem("selectedBeverages");
+      document.querySelector("#bebidasTable tbody").innerHTML = "";
+      updateTotalEvento();
+    });
+    
+    document.getElementById("removerDecoracao").addEventListener("click", function() {
+      localStorage.removeItem("selectedDecoration");
+      localStorage.removeItem("decorationPriceAdded");
+      document.getElementById("selectedDecorationRes").innerText = "";
+      document.getElementById("decorationPriceRes").innerText = "";
+      updateTotalEvento();
+    });
+    
+  </script>
+</body>
+</html>
