@@ -95,21 +95,21 @@
       <form id="form-detalhado">
         <div class="row">
           <div class="col-md-6">
-            <label for="nomeResponsavel2" class="form-label">Nome do Responsável 1 <span class="obrigatorio">*</span></label>
+            <label for="nomeResponsavel2" class="form-label">Nome do(a) responsável  <span class="obrigatorio">*</span></label>
             <input type="text" class="form-control" id="nomeResponsavel2" required>
           </div>
           <div class="col-md-6">
-            <label for="telefone1" class="form-label">Telefone do Responsável 1 <span class="obrigatorio">*</span></label>
+            <label for="telefone1" class="form-label">Telefone do(a) responsável 1 <span class="obrigatorio">*</span></label>
             <input type="tel" class="form-control" id="telefone1" required>
           </div>
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label for="nomeResponsavel2b" class="form-label">Nome do Responsável 2 <span class="obrigatorio">*</span></label>
+            <label for="nomeResponsavel2b" class="form-label">Nome do(a) 2° responsável  <span class="obrigatorio">*</span></label>
             <input type="text" class="form-control" id="nomeResponsavel2b" required>
           </div>
           <div class="col-md-6">
-            <label for="telefone2" class="form-label">Telefone do Responsável 2 <span class="obrigatorio">*</span></label>
+            <label for="telefone2" class="form-label">Telefone do 2° responsável <span class="obrigatorio">*</span></label>
             <input type="tel" class="form-control" id="telefone2" required>
           </div>
         </div>
@@ -142,7 +142,7 @@
           </div>
         </div>
         <div class="mb-3">
-          <label for="numeroResidencia" class="form-label">Número da Residência <span class="obrigatorio">*</span></label>
+          <label for="numeroResidencia" class="form-label">Número da residência <span class="obrigatorio">*</span></label>
           <input type="text" class="form-control" id="numeroResidencia" required>
         </div>
         <div class="mb-3">
@@ -184,13 +184,14 @@
       }
     });
 
-    // Verifica a flag "edit_complementares" para configurar o fluxo de edição
+    // Preenche o campo "Nome do(a) responsável" com o valor salvo no localStorage
     window.addEventListener("load", function() {
+      document.getElementById("nomeResponsavel2").value = localStorage.getItem("nomeResponsavel") || "";
+      
       var editMode = localStorage.getItem("edit_complementares");
       console.log("edit_complementares =", editMode);
       if (editMode === "true") {
-        // Preenche os campos com os dados salvos
-        document.getElementById("nomeResponsavel2").value = localStorage.getItem("nomeResponsavel") || "";
+        // Preenche os outros campos com os dados salvos
         document.getElementById("telefone1").value = localStorage.getItem("telefone1Detalhado") || "";
         document.getElementById("nomeResponsavel2b").value = localStorage.getItem("nomeResponsavel2bDetalhado") || "";
         document.getElementById("telefone2").value = localStorage.getItem("telefone2Detalhado") || "";
@@ -204,7 +205,7 @@
         document.getElementById("complemento").value = localStorage.getItem("complementoDetalhado") || "";
         document.getElementById("idade").value = localStorage.getItem("idadeDetalhado") || "";
         
-        // Altera o botão "Próximo" para "Salvar"
+        // Altera o botão "Próximo" para "Salvar" e define sua ação
         var proximoBtn = document.getElementById("proximoPagina3");
         proximoBtn.innerText = "Salvar";
         proximoBtn.onclick = function() {
