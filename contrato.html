@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Contrato - Pine Tree Farm</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Estilos gerais */
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100vh;
+      font-family: 'Roboto', sans-serif;
+      background: url("fundo de pagina.png") no-repeat center center fixed;
+      background-size: cover;
+      overflow-x: hidden;
+      color: #000;
+    }
+    .wrapper {
+      width: 100%;
+      min-height: 100vh;
+      box-sizing: border-box;
+      border: 5px solid transparent;
+      border-image: linear-gradient(90deg, #05bddc, #FFD700) 1;
+      padding: 20px;
+    }
+    .contract {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #fff;
+      border: 1px solid #ccc;
+      overflow: hidden;
+    }
+    /* Exibe a logo de forma circular */
+    #logoContainer {
+      width: 150px;
+      height: 150px;
+      border: 1px solid #ccc;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: 50%;
+    }
+    #logoContainer img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    h2, h3, h4 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    p, ul, table {
+      text-align: justify;
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background: #e2e2e2;
+    }
+    .total-display {
+      font-weight: bold;
+      text-align: center;
+      margin-top: 10px;
+    }
+    #contractDate {
+      text-align: center;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    .validation-box {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .validation-box input {
+      margin-right: 10px;
+    }
+    .geo-message {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: 10px;
+    }
+    /* Quadro Resumo */
+    .summary-section {
+      background: #f9f9f9;
+      padding: 15px;
+      border: 1px solid #ddd;
+      margin: 20px 0;
+      border-radius: 5px;
+    }
+    .summary-section h3 {
+      margin-top: 0;
+      text-align: center;
+      color: #333;
+    }
+    .summary-group {
+      margin-bottom: 15px;
+    }
+    .summary-group h4 {
+      margin-bottom: 8px;
+      color: #333;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 5px;
+    }
+    .summary-group table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .summary-group table th,
+    .summary-group table td {
+      border: 1px solid #ccc;
+      padding: 6px 8px;
+      font-size: 0.9rem;
+    }
+    .summary-group table th {
+      background: #e2e2e2;
+    }
+    .summary-group ul {
+      list-style: disc inside;
+      padding-left: 20px;
+    }
+    /* Área de assinatura interativa para Contratante */
+    .signature-container {
+      margin: 20px 0;
+      text-align: center;
+    }
+    #signatureCanvas {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      touch-action: none;
+    }
+    .btn-sign-clear {
+      margin-top: 10px;
+      background: linear-gradient(90deg, #05bddc, var(--color-primary, #00692e));
+      border: none;
+      padding: 8px 16px;
+      font-size: 1rem;
+      border-radius: 5px;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .btn-sign-clear:hover {
+      background: linear-gradient(90deg, var(--color-primary, #00692e), #05bddc);
+    }
+    /* Botão Enviar */
+    .nav-buttons {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+    }
+    .btn-custom {
+      background: linear-gradient(90deg, #05bddc, var(--color-primary, #00692e));
+      border: none;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      width: 200px;
+    }
+    .btn-custom:hover {
+      background: linear-gradient(90deg, var(--color-primary, #00692e), #05bddc);
+      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="contract">
+      <!-- Logo -->
+      <div id="logoContainer">
+        <img src="logo/Logo Estação Ecológica Ambiental Pine Tree Farm (1).jpg" alt="Logo Pine Tree Farm">
+      </div>
+      
+      <!-- Conteúdo dinâmico do contrato -->
+      <div id="contractContent"></div>
+      
+      <!-- Data, validação e geolocalização -->
+      <p id="contractDate"></p>
+      <div class="validation-box">
+        <input type="checkbox" id="agreeTerms" />
+        <label for="agreeTerms">Declaro para todos fins que estou de acordo com os termos deste contrato e da prestação dos serviços contratados.
+          A seleção dessa opção equivale à anuência/assinatura deste contrato</label>
+      </div>
+      <p class="geo-message">Para o correto preenchimento do contrato, é necessário permitir o acesso à sua localização.</p>
+      <div id="geoInfo" style="text-align: center; margin-bottom: 20px;"></div>
+      
+      <!-- Assinatura do Contratado -->
+      <p>_______________________________<br>Contratado</p>
+      
+      <!-- Área interativa de assinatura para o Contratante -->
+      <div class="signature-container">
+        <p><strong>Contratante: marcelo patric duarte silva - CPF: 23959431856</strong></p>
+        <p>Assine aqui:</p>
+        <canvas id="signatureCanvas" width="750" height="200"></canvas>
+        <br>
+        <button type="button" class="btn-sign-clear" id="clearSignature">Limpar Assinatura</button>
+      </div>
+      
+    </div>
+    
+    <!-- Botão "Enviar", fora do container do contrato -->
+    <div class="nav-buttons">
+      <button type="button" class="btn-custom" id="enviar">Enviar</button>
+    </div>
+  </div>
+  
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      // Função para formatar valores em moeda brasileira
+      function formatCurrency(value) {
+        return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
+      }
+      
+      // Atualiza a data e hora do contrato
+      function updateContractDate() {
+        const now = new Date();
+        const formattedDate = now.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' });
+        const formattedTime = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        return `Brasília, ${formattedDate} às ${formattedTime}`;
+      }
+      document.getElementById('contractDate').innerText = updateContractDate();
+      
+      // Recupera os dados do localStorage (página 11)
+      const nomeResponsavel = localStorage.getItem('nomeResponsavel') || "";
+      const cpfDetalhado = localStorage.getItem('cpfDetalhado') || "";
+      const rgDetalhado = localStorage.getItem('rgDetalhado') || "";
+      const telefone1Detalhado = localStorage.getItem('telefone1Detalhado') || "";
+      const emailDetalhado = localStorage.getItem('emailDetalhado') || "";
+      
+      const cepDetalhado = localStorage.getItem('cepDetalhado') || "";
+      const logradouroDetalhado = localStorage.getItem('logradouroDetalhado') || "";
+      const numeroResidenciaDetalhado = localStorage.getItem('numeroResidenciaDetalhado') || "";
+      const complementoDetalhado = localStorage.getItem('complementoDetalhado') || "";
+      const bairroDetalhado = localStorage.getItem('bairroDetalhado') || "";
+      const cidadeDetalhado = localStorage.getItem('cidadeDetalhado') || "";
+      const estadoDetalhado = localStorage.getItem('estadoDetalhado') || "";
+      
+      // Dados do resumo
+      const aniversariante = localStorage.getItem('aniversariante') || "";
+      const dataNascimento = localStorage.getItem('dataNascimento') || "";
+      const dataEvento = localStorage.getItem('dataEvento') || "";
+      const horarioEvento = localStorage.getItem('horarioEvento') || "";
+      
+      const nomeResponsavel2bDetalhado = localStorage.getItem('nomeResponsavel2bDetalhado') || "";
+      const telefone2Detalhado = localStorage.getItem('telefone2Detalhado') || "";
+      
+      const numeroConvidados = localStorage.getItem('numeroConvidados') || "";
+      const pricePerPerson = localStorage.getItem('pricePerPerson') || "";
+      const totalConvidadosStored = parseFloat(localStorage.getItem('totalConvidados')) || 0;
+      
+      const selectedOptions = JSON.parse(localStorage.getItem('selectedOptions') || "[]");
+      const selectedEmpratados = JSON.parse(localStorage.getItem('selectedEmpratados') || "[]");
+      const selectedBeverages = JSON.parse(localStorage.getItem('selectedBeverages') || "[]");
+      
+      // Para Decoração (sem "Decoração Específica")
+      const selectedDecoration = localStorage.getItem('selectedDecoration') || "";
+      const selectedBalloon = localStorage.getItem('selectedBalloon') || "";
+      const balloonPrice = parseFloat(localStorage.getItem('balloonPriceAdded') || "0");
+      const decorationPrice = parseFloat(localStorage.getItem('decorationPriceAdded') || "0");
+      
+      const totalCart = parseFloat(localStorage.getItem('totalEvento')) || 0;
+      
+      // Valor de Investimento Empratados (calculado na página 11)
+      const investimentoEmpratados = parseFloat(localStorage.getItem("investimentoEmpratados")) || 0;
+      
+      // Constrói o endereço completo
+      let endereco = logradouroDetalhado;
+      if (numeroResidenciaDetalhado) {
+        endereco += ", " + numeroResidenciaDetalhado;
+      }
+      if (complementoDetalhado) {
+        endereco += " (" + complementoDetalhado + ")";
+      }
+      endereco += ", " + bairroDetalhado + ", " + cidadeDetalhado + " - " + estadoDetalhado + ", CEP: " + cepDetalhado;
+      
+      // Monta HTML para as opções do cardápio
+      let selectedOptionsHTML = "";
+      if (selectedOptions.length > 0) {
+        selectedOptionsHTML = selectedOptions.map(option => `<li>${option}</li>`).join("");
+      } else {
+        selectedOptionsHTML = "<li>Nenhuma opção selecionada</li>";
+      }
+      
+      // Monta HTML para os empratados (lista dos itens)
+      let selectedEmpratadosHTML = "";
+      if (selectedEmpratados.length > 0) {
+        selectedEmpratadosHTML = selectedEmpratados.map(item => `<li>${item}</li>`).join("");
+      } else {
+        selectedEmpratadosHTML = "<li>Nenhum empratado selecionado</li>";
+      }
+      
+      // Monta HTML para as bebidas
+      let selectedBeveragesHTML = "";
+      if (selectedBeverages.length > 0) {
+        selectedBeveragesHTML = selectedBeverages.map(item => `
+          <tr>
+            <td>${item.name}</td>
+            <td>${formatCurrency(item.unitPrice)}</td>
+            <td>${item.quantity}</td>
+            <td>${formatCurrency(item.unitPrice * item.quantity)}</td>
+          </tr>
+        `).join("");
+      } else {
+        selectedBeveragesHTML = "<tr><td colspan='4'>Nenhuma bebida selecionada</td></tr>";
+      }
+      
+      // Monta o template do contrato com o quadro resumo e demais cláusulas
+      const contractHTML = `
+        <h2>CONTRATO DE PRESTAÇÃO DE SERVIÇOS DE RECREAÇÃO INFANTIL</h2>
+        <p>Pelo presente instrumento particular, as partes abaixo identificadas celebram o Contrato de Prestação de Serviços de Recreação Infantil, conforme condições descritas a seguir:</p>
+        
+        <h3>1. IDENTIFICAÇÃO DAS PARTES</h3>
+        <p>
+          CONTRATANTE: Nome: ${nomeResponsavel} CPF nº: ${cpfDetalhado} RG nº: ${rgDetalhado} Endereço: ${endereco} Telefone: ${telefone1Detalhado} E-mail: ${emailDetalhado}<br><br>
+          CONTRATADA: PINE TREE FARM PROMOÇÃO DE EVENTOS LTDA CNPJ nº: 27.504.555/0001-27 Endereço: Condomínio Quintas do Sol, Quadra 02, Lote 96, Jardim Botânico, Brasília - DF E-mail: contato@pinetreefarm.com.br
+        </p>
+        
+        <h3>2. SERVIÇOS ESCOLHIDOS PELO CONTRATANTE</h3>
+        <p>Cláusula 1ª – Segue abaixo a ficha anexada com os dados expressos pelo CONTRATANTE, especificando detalhadamente os serviços escolhidos, que integram e complementam este contrato.</p>
+        <p>a) A CONTRATADA guarda o direito de alterar a programação do evento a qualquer tempo, garantindo o bem-estar das crianças e dos animais, observando as condições climáticas, disponibilidade de insumos, cadência de chegada dos convidados, disposição das crianças e a segurança de todos os envolvidos.</p>
+        
+        <div class="summary-section">
+          <h3>Quadro Resumo do Evento</h3>
+          
+          <div class="summary-group">
+            <h4>Dados Preliminares do Evento</h4>
+            <table>
+              <tr>
+                <th>Nome do(a) responsável</th>
+                <td>${nomeResponsavel}</td>
+              </tr>
+              <tr>
+                <th>Nome d(a) aniversariante</th>
+                <td>${aniversariante}</td>
+              </tr>
+              <tr>
+                <th>Data de nascimento</th>
+                <td>${dataNascimento}</td>
+              </tr>
+              <tr>
+                <th>Data do Evento</th>
+                <td>${dataEvento}</td>
+              </tr>
+              <tr>
+                <th>Horário do evento</th>
+                <td>${horarioEvento}</td>
+              </tr>
+            </table>
+          </div>
+          
+          <div class="summary-group">
+            <h4>Dados Complementares do Evento</h4>
+            <table>
+              <tr>
+                <th>Responsável 1</th>
+                <td>${nomeResponsavel}</td>
+              </tr>
+              <tr>
+                <th>Telefone 1</th>
+                <td>${telefone1Detalhado}</td>
+              </tr>
+              <tr>
+                <th>CPF</th>
+                <td>${cpfDetalhado}</td>
+              </tr>
+              <tr>
+                <th>RG</th>
+                <td>${rgDetalhado}</td>
+              </tr>
+              <tr>
+                <th>Responsável 2</th>
+                <td>${nomeResponsavel2bDetalhado}</td>
+              </tr>
+              <tr>
+                <th>Telefone 2</th>
+                <td>${telefone2Detalhado}</td>
+              </tr>
+              <tr>
+                <th>E-mail</th>
+                <td>${emailDetalhado}</td>
+              </tr>
+              <tr>
+                <th>CEP</th>
+                <td>${cepDetalhado}</td>
+              </tr>
+              <tr>
+                <th>Logradouro</th>
+                <td>${logradouroDetalhado}</td>
+              </tr>
+              <tr>
+                <th>Bairro</th>
+                <td>${bairroDetalhado}</td>
+              </tr>
+              <tr>
+                <th>Cidade</th>
+                <td>${cidadeDetalhado}</td>
+              </tr>
+              <tr>
+                <th>Estado</th>
+                <td>${estadoDetalhado}</td>
+              </tr>
+              <tr>
+                <th>Número</th>
+                <td>${numeroResidenciaDetalhado}</td>
+              </tr>
+              <tr>
+                <th>Complemento</th>
+                <td>${complementoDetalhado}</td>
+              </tr>
+            </table>
+          </div>
+          
+          <div class="summary-group">
+            <h4>Número de Convidados</h4>
+            <table>
+              <tr>
+                <th>Número</th>
+                <td>${numeroConvidados}</td>
+              </tr>
+              <tr>
+                <th>Preço por Pessoa</th>
+                <td>${formatCurrency(pricePerPerson)}</td>
+              </tr>
+              <tr>
+                <th>Total (Convidados)</th>
+                <td>${formatCurrency(totalConvidadosStored)}</td>
+              </tr>
+            </table>
+          </div>
+          
+          <div class="summary-group">
+            <h4>Opções do Cardápio</h4>
+            <ul>
+              ${selectedOptionsHTML}
+            </ul>
+          </div>
+          
+          <div class="summary-group">
+            <h4>Empratados</h4>
+            <ul>
+              ${selectedEmpratadosHTML}
+            </ul>
+            <p><strong>Investimento Empratados:</strong> ${formatCurrency(investimentoEmpratados)}</p>
+          </div>
+          
+          <div class="summary-group">
+            <h4>Bebidas</h4>
+            <table>
+              <thead>
+                <tr>
+                  <th>Produto</th>
+                  <th>Preço Unitário</th>
+                  <th>Quantidade</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${selectedBeveragesHTML}
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="summary-group">
+            <h4>Decoração</h4>
+            <table>
+              <tr>
+                <th>Decoração Selecionada</th>
+                <td>${selectedDecoration}</td>
+              </tr>
+              <tr>
+                <th>Balões</th>
+                <td>${selectedBalloon}</td>
+              </tr>
+              <tr>
+                <th>Preço da Decoração</th>
+                <td>${formatCurrency(decorationPrice)}</td>
+              </tr>
+            </table>
+          </div>
+          
+          <div class="summary-group">
+            <h4>Total do Evento</h4>
+            <p class="total-display">${formatCurrency(totalCart)}</p>
+          </div>
+        </div>
+        
+        <h3>3. OBJETO DO CONTRATO</h3>
+        <p>Cláusula 2ª - Este contrato tem como objetivo a prestação de serviços de recreação infantil nas instalações da CONTRATADA, conforme condições e especificações indicadas na Ficha Cadastral anexa, que integra este contrato.</p>
+        
+        <h3>4. SERVIÇOS INCLUÍDOS</h3>
+        <p>Cláusula 3ª - O CONTRATADO compromete-se a:</p>
+        <p>
+          a) Planejar e executar atividades recreativas, esportivas, culturais e educativas para os participantes do evento;<br>
+          b) Disponibilizar monitores qualificados para supervisionar e conduzir as atividades;<br>
+          c) Fornecer o material necessário para a realização das atividades programadas;<br>
+          d) Garantir a segurança e o bem-estar dos participantes durante todo o período do evento.
+        </p>
+        
+        <h3>5. OBRIGAÇÕES DAS PARTES</h3>
+        <h4>5.1. Obrigações do CONTRATANTE</h4>
+        <p>Cláusula 4ª - O CONTRATANTE deverá:</p>
+        <p>
+          a) Informar, com no mínimo 5 (cinco) dias de antecedência, o número exato de convidados;<br>
+          b) Informar, com antecedência mínima de 5 (cinco) dias, os itens alimentares selecionados;<br>
+          c) Comunicar à CONTRATADA sobre qualquer necessidade adicional ou mudança com antecedência mínima de 5 (cinco) dias úteis antes do evento;<br>
+          d) Responsabilizar-se pelo uso adequado dos utensílios fornecidos, ressarcindo quaisquer danos ou quebras;<br>
+          e) Informar previamente à CONTRATADA sobre quaisquer restrições alimentares, de saúde ou comportamentais dos menores, ficando claro que permanece com o CONTRATANTE toda a responsabilidade pela segurança, saúde e bem-estar do menor participante quanto a tais restrições;<br>
+          f) Sugerir que os convidados venham com calçados fechados, roupas adequadas para as atividades, repelente e protetor solar no corpo. Sugerir ainda que as crianças tragam uma mochila com uma troca completa de roupa, um calçado extra e itens de higiene;<br>
+          g) Providenciar bolos e doces para a festa, vez que não são de responsabilidade da CONTRATADA.
+        </p>
+        <h4>5.2. Obrigações da CONTRATADA</h4>
+        <p>A CONTRATADA compromete-se a:</p>
+        <p>
+          a) Providenciar a confecção do convite digital;<br>
+          b) Cumprir os horários e atividades acordadas, salvo em caso de condições climáticas adversas;<br>
+          c) Oferecer alimentação na quantidade contratada previamente pelo CONTRATANTE;<br>
+          d) Fornecer as bebidas contratadas: água filtrada, água com gás, água saborizada, café, chás, duas opções de suco de polpa (sabores conforme disponibilidade), Coca-Cola e Guaraná.
+        </p>
+        
+        <h3>6. CONDIÇÕES ESPECÍFICAS DO EVENTO</h3>
+        <p>
+          Não será permitido:<br>
+          a) Fogos de artifício ou artefatos similares;<br>
+          b) Uso de enfeites que gerem resíduos excessivos (confetes, miçangas, estalinhos, entre outros).
+        </p>
+        
+        <h3>7. CONDIÇÕES DE PAGAMENTO</h3>
+        <p>
+          a) Em caso de desistência do CONTRATANTE em até 10 dias antes da data do evento, será retido o sinal de 20% (vinte por cento) como cobertura dos custos operacionais; caso a desistência aconteça com menos de dez dias do evento a retenção será de 30% (trinta por cento).<br>
+          a) Serviços adicionais solicitados durante o evento serão cobrados separadamente, mediante autorização prévia do CONTRATANTE.<br>
+          b) O valor do serviço contratado será aquele especificado na ficha cadastral, podendo ser parcelado conforme indicado no quadro resumo. O valor total ou a primeira parcela deverá ser pago no ato da assinatura deste contrato.<br>
+          <em>Parágrafo Primeiro:</em> Será cobrado valor integral para crianças a partir de 2 anos, 11 meses e 30 dias de idade.<br>
+          c) O pagamento deverá ser realizado exclusivamente via PIX na conta indicada pela CONTRATADA. A CONTRATADA fornecerá os dados da chave PIX e informações bancárias no momento oportuno. Os comprovantes de pagamento/quitação deverão ser enviados via aplicativo de Whatsapp até o dia do vencimento do pagamento integral ou da parcela, enquanto que os agendamentos deverão ser enviados no dia da contratação.<br>
+          d) Convidados adicionais informados previamente, com antecedência de 5 dias úteis, terão o valor por pessoa de [inserir valor]. Caso não sejam previamente informados, será cobrado adicional de 20% (vinte por cento) sobre este valor.<br>
+          e) A cerveja adquirida antecipadamente custará R$13,00, sendo R$16,00 no dia do evento.
+        </p>
+        
+        <h3>8. AUTORIZAÇÕES</h3>
+        <p>
+          a) O CONTRATANTE autoriza a participação dos menores nas atividades externas programadas pela CONTRATADA durante o período contratado.<br>
+          b) O CONTRATANTE autoriza, gratuitamente, o uso de imagem dos participantes menores para divulgação das atividades promovidas pela CONTRATADA. Caso não concorde, deverá informar por escrito previamente.<br>
+          c) Poderá o CONTRATANTE realizar eventos simultâneos ou paralelos em suas dependências buscando evitar interferências entre esses eventos.
+        </p>
+        
+        <h3>9. DISPOSIÇÕES GERAIS</h3>
+        <p>
+          a) O CONTRATANTE assume total responsabilidade pelas informações fornecidas relativas ao participante menor e suas condições específicas (saúde, alimentares, comportamentais).<br>
+          b) A CONTRATADA não se responsabiliza por perda ou dano de objetos pessoais dos participantes.<br>
+          c) Os responsáveis legais respondem pelos danos materiais causados pelos menores às instalações e equipamentos da CONTRATADA ou de terceiros.<br>
+          d) O CONTRATANTE deverá respeitar rigorosamente as datas e horários definidos na ficha cadastral, sendo tolerado um atraso máximo de 30 minutos para o início do evento. Após o encerramento do evento, será tolerada permanência máxima de 30 minutos para saída dos participantes, sob pena de aplicação de multa equivalente a 5% (cinco por cento) sobre o valor total do evento e adicional de 35% do valor do evento por hora adicional de permanência na Pine Tree Farm.
+        </p>
+        
+        <h3>10. FORO</h3>
+        <p>
+          a) Para dirimir quaisquer questões oriundas deste contrato, as partes elegem, preferencialmente, o Juizado Especial Cível (Pequenas Causas) de Brasília - DF, conforme previsto na legislação vigente. Caso a matéria não se enquadre na competência desse juizado, as partes elegem o foro da Comarca de Brasília - DF, com renúncia expressa de qualquer outro, por mais privilegiado que seja.
+        </p>
+      `;
+      
+      // Insere o conteúdo do contrato na página
+      document.getElementById('contractContent').innerHTML = contractHTML;
+      
+      // Configura a geolocalização ao marcar os termos
+      document.getElementById('agreeTerms').addEventListener('change', function() {
+        if (this.checked) {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+              function(position) {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                document.getElementById('geoInfo').innerText = 'Localização capturada: Latitude ' + lat.toFixed(4) + ', Longitude ' + lon.toFixed(4);
+              },
+              function(error) {
+                console.error("Erro na geolocalização:", error);
+                document.getElementById('geoInfo').innerText = 'Não foi possível capturar sua localização.';
+              }
+            );
+          } else {
+            document.getElementById('geoInfo').innerText = 'Geolocalização não é suportada por este navegador.';
+          }
+        } else {
+          document.getElementById('geoInfo').innerText = '';
+        }
+      });
+      
+      // Configura a área de assinatura interativa para o Contratante
+      const canvas = document.getElementById('signatureCanvas');
+      const ctx = canvas.getContext('2d');
+      let drawing = false;
+      let lastX = 0;
+      let lastY = 0;
+      
+      function startPosition(e) {
+        drawing = true;
+        [lastX, lastY] = getXY(e);
+      }
+      
+      function finishedPosition() {
+        drawing = false;
+      }
+      
+      function draw(e) {
+        if (!drawing) return;
+        e.preventDefault();
+        const [x, y] = getXY(e);
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(x, y);
+        ctx.strokeStyle = "#000";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        [lastX, lastY] = [x, y];
+      }
+      
+      function getXY(e) {
+        let x, y;
+        if (e.touches) {
+          x = e.touches[0].clientX - canvas.getBoundingClientRect().left;
+          y = e.touches[0].clientY - canvas.getBoundingClientRect().top;
+        } else {
+          x = e.clientX - canvas.getBoundingClientRect().left;
+          y = e.clientY - canvas.getBoundingClientRect().top;
+        }
+        return [x, y];
+      }
+      
+      // Eventos para mouse e touch
+      canvas.addEventListener('mousedown', startPosition);
+      canvas.addEventListener('mouseup', finishedPosition);
+      canvas.addEventListener('mouseout', finishedPosition);
+      canvas.addEventListener('mousemove', draw);
+      
+      canvas.addEventListener('touchstart', startPosition);
+      canvas.addEventListener('touchend', finishedPosition);
+      canvas.addEventListener('touchcancel', finishedPosition);
+      canvas.addEventListener('touchmove', draw);
+      
+      // Botão para limpar a assinatura
+      document.getElementById('clearSignature').addEventListener('click', function() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      });
+      
+      // Configura a ação do botão "Enviar"
+      document.getElementById("enviar").addEventListener("click", function() {
+        // Redireciona diretamente para paginafinal.html
+        window.location.href = "paginafinal.html";
+        
+        /*
+        // Quando o endpoint estiver configurado, descomente o trecho abaixo e remova o redirecionamento direto
+        // Coleta o conteúdo do contrato
+        const contractContent = document.getElementById('contractContent').innerHTML;
+        // Recupera o email do cliente do localStorage
+        const clientEmail = localStorage.getItem('emailDetalhado') || "";
+        // Define o email da empresa
+        const companyEmail = "coloniapinetreefarm@gmail.com";
+        
+        // Dados para envio via backend
+        const data = {
+          clientEmail: clientEmail,
+          companyEmail: companyEmail,
+          subject: "Cópia do Contrato - Pine Tree Farm",
+          content: contractContent
+        };
+        
+        // Chamada AJAX (fetch) para o endpoint de envio de email
+        fetch("sendEmail.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+          if (result.success) {
+            alert("Pedido enviado com sucesso!");
+            window.location.href = "paginafinal.html";
+          } else {
+            alert("Houve um erro ao enviar o pedido.");
+          }
+        })
+        .catch(error => {
+          console.error("Erro no envio do email:", error);
+          alert("Houve um erro ao enviar o pedido.");
+        });
+        */
+      });
+    });
+  </script>
+</body>
+</html>
