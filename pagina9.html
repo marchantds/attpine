@@ -3,37 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pine Tree Farm - Decorações</title>
+  <title>Pine Tree Farm - Decoração</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
   <style>
-    /* Estilos gerais para cobrir a tela toda */
+    /* Define a imagem de fundo para cobrir toda a página */
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
+      width: 100%;
+      min-height: 100%;
       font-family: 'Roboto', sans-serif;
-      background-color: #F9F9F9;
-      background: rgba(106, 190, 155, 0.1);
-      background-image: linear-gradient(white, white), linear-gradient(145deg, #FFD700, #6DBF79);
-      background-origin: border-box;
-      background-clip: content-box, border-box;
+      background: url("fundo de pagina.png") no-repeat center center fixed;
+      background-size: cover;
       overflow-x: hidden;
     }
+    /* Wrapper: envolve todo o conteúdo e aplica a borda com gradiente */
+    .wrapper {
+      width: 100%;
+      min-height: 100vh;
+      box-sizing: border-box;
+      border: 5px solid transparent;
+      border-image: linear-gradient(90deg, #05bddc, #FFD700) 1;
+    }
+    /* Container: centraliza o conteúdo sem fundo branco ou sombra */
     .container {
       position: relative;
-      min-height: 100vh;
       padding: 20px;
       margin: 20px auto;
       max-width: 1200px;
-      background-color: #fff;
-      background-image: url("fundo de pagina.png");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      box-shadow: 0 0 15px rgba(255,215,0,0.6);
-      border: 5px solid transparent;
-      border-radius: 15px;
-      border-image: linear-gradient(90deg, #05bddc, #FFD700) 1;
+      background: transparent; /* Fundo transparente */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -162,25 +160,27 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Carrinho -->
-    <div id="cartContainer">
-      🛒 <span id="cartValue"></span>
-    </div>
-    <div class="title-wrapper">
-      <div class="page-title">Decorações</div>
-    </div>
-    <div class="form-container">
-      <h3>Decorações</h3>
-      <div class="question">Deseja adicionar decorações ao evento?</div>
-      <div>
-        <button type="button" class="btn-custom-sim" id="btnSim">SIM</button>
-        <button type="button" class="btn-custom-nao" id="btnNao">NÃO</button>
+  <div class="wrapper">
+    <div class="container">
+      <!-- Carrinho -->
+      <div id="cartContainer">
+        🛒 <span id="cartValue"></span>
       </div>
-    </div>
-    <!-- Container de navegação -->
-    <div class="nav-buttons">
-      <button type="button" class="btn-custom" id="voltarPage9">Voltar</button>
+      <div class="title-wrapper">
+        <div class="page-title">Decoração temática</div>
+      </div>
+      <div class="form-container">
+        <h3>Decoração temática</h3>
+        <div class="question">Deseja adicionar decoração temática ao evento?</div>
+        <div>
+          <button type="button" class="btn-custom-sim" id="btnSim">SIM</button>
+          <button type="button" class="btn-custom-nao" id="btnNao">NÃO</button>
+        </div>
+      </div>
+      <!-- Container de navegação -->
+      <div class="nav-buttons">
+        <button type="button" class="btn-custom" id="voltarPage9">Voltar</button>
+      </div>
     </div>
   </div>
   
@@ -192,24 +192,24 @@
     
     // Atualiza o carrinho com o valor total armazenado (já calculado nas páginas anteriores)
     var cameFrom = localStorage.getItem("cameFrom");
-  if (cameFrom === "8") {
-    // Recupera o valor da página 7 (totalCompra)
-    var totalCompra = parseFloat(localStorage.getItem("totalCompra")) || 0;
-    // Recupera os itens de bebidas da página 8
-    var selectedBeverages = JSON.parse(localStorage.getItem("selectedBeverages") || "[]");
-    // Calcula o total das bebidas
-    var beveragesTotal = selectedBeverages.reduce(function(sum, item) {
-       return sum + (item.unitPrice * item.quantity);
-        }, 0);
-        // Calcula a soma final
-        var somaTotal = totalCompra + beveragesTotal;
+    if (cameFrom === "8") {
+      // Recupera o valor da página 7 (totalCompra)
+      var totalCompra = parseFloat(localStorage.getItem("totalCompra")) || 0;
+      // Recupera os itens de bebidas da página 8
+      var selectedBeverages = JSON.parse(localStorage.getItem("selectedBeverages") || "[]");
+      // Calcula o total das bebidas
+      var beveragesTotal = selectedBeverages.reduce(function(sum, item) {
+         return sum + (item.unitPrice * item.quantity);
+      }, 0);
+      // Calcula a soma final
+      var somaTotal = totalCompra + beveragesTotal;
       // Exibe o valor no carrinho
-      document.getElementById("cartValue").innerText = "Valor total da compra: " + formatCurrency(somaTotal);
+      document.getElementById("cartValue").innerText = " Valor parcial do evento : " + formatCurrency(somaTotal);
       // Armazena o resultado final na nova chave "totalFinal"
       localStorage.setItem("totalFinal", somaTotal.toFixed(2));
     } else {
       var totalCompra = parseFloat(localStorage.getItem("totalCompra")) || 0;
-      document.getElementById("cartValue").innerText = "Valor total da compra: " + formatCurrency(totalCompra);
+      document.getElementById("cartValue").innerText = " Valor parcial do evento : " + formatCurrency(totalCompra);
       localStorage.setItem("totalFinal", totalCompra.toFixed(2));
     }
     
@@ -228,10 +228,8 @@
     // Configuração do botão "Voltar":
     // Se "cameFrom" estiver definida como "8", o usuário veio pela página 8 e deve voltar para a página 8;
     // caso contrário, volta para a página 7.
-    var cameFrom = localStorage.getItem("cameFrom");
-    console.log("cameFrom:", cameFrom); // para depuração
     var voltarBtn = document.getElementById("voltarPage9");
-    if (cameFrom === "8") {
+    if (localStorage.getItem("cameFrom") === "8") {
       voltarBtn.addEventListener("click", function(){
         window.location.href = "pagina8.html"; // Volta para a página 8
       });
@@ -243,4 +241,3 @@
   </script>
 </body>
 </html>
-
