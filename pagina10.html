@@ -6,34 +6,32 @@
   <title>Pine Tree Farm - Decorações</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
   <style>
-    /* Estilos gerais */
+    /* Imagem de fundo para toda a página */
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
+      width: 100%;
+      min-height: 100%;
       font-family: 'Roboto', sans-serif;
-      background-color: #F9F9F9;
-      background: rgba(106, 190, 155, 0.1);
-      background-image: linear-gradient(white, white), linear-gradient(145deg, #FFD700, #6DBF79);
-      background-origin: border-box;
-      background-clip: content-box, border-box;
+      background: url("fundo de pagina.png") no-repeat center center fixed;
+      background-size: cover;
       overflow-x: hidden;
     }
+    /* Wrapper com borda em gradiente */
+    .wrapper {
+      width: 100%;
+      min-height: 100vh;
+      box-sizing: border-box;
+      border: 5px solid transparent;
+      border-image: linear-gradient(90deg, #05bddc, #FFD700) 1;
+    }
+    /* Container centralizado */
     .container {
       position: relative;
-      min-height: 100vh;
       padding: 20px;
       margin: 20px auto;
       max-width: 1200px;
-      background-color: #fff;
-      background-image: url("fundo de pagina.png");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      box-shadow: 0 0 15px rgba(255,215,0,0.6);
-      border: 5px solid transparent;
-      border-radius: 15px;
-      border-image: linear-gradient(90deg, #05bddc, #FFD700) 1;
+      background: transparent;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -67,21 +65,25 @@
       max-width: 90%;
       margin: 0 auto 20px;
     }
-    /* Grid para os itens de decoração */
+    /* Grid dos itens de decoração */
     .row {
       margin-top: 20px;
       width: 100%;
     }
+    /* Itens de decoração (sem borda para eliminar as linhas brancas) */
     .decoration-item {
-      margin-bottom: 40px;
+      margin-bottom: 0;
       text-align: center;
       padding: 15px;
       border-radius: 8px;
-      border: 1px solid #ccc;
+      border: none;
       cursor: pointer;
       transition: border 0.3s ease;
       position: relative;
+      height: 650px;
+      overflow: hidden;
     }
+    /* Exibe borda dourada apenas quando selecionado */
     .decoration-item.selected {
       border: 3px solid #FFD700;
     }
@@ -92,20 +94,23 @@
       gap: 10px;
       margin-bottom: 10px;
     }
-    .photo-upload {
-      width: 300px;
+    /* Container de upload com medidas finais: 920px x 300px, sem borda */
+    .photo-upload.final {
+      width: 920px;
       height: 300px;
-      border: 2px dashed #ccc;
+      border: none;
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: #00692e;
+      background-color: transparent;
       border-radius: 8px;
     }
-    .photo-upload span {
-      color: #fff;
-      font-weight: bold;
-      font-size: 1rem;
+    .photo-upload.final img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      border-radius: inherit;
     }
     .decoration-name {
       font-size: 1.2rem;
@@ -125,6 +130,7 @@
       margin-top: 10px;
       font-size: 1.1rem;
     }
+    /* Caixa de descrição com barra de rolagem */
     .description-balloon {
       background-color: #FFF3CD;
       border: 1px solid #FFEEBA;
@@ -135,6 +141,28 @@
       margin-top: 10px;
       text-align: left;
       max-width: 90%;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    /* Container de opções para balões - fundo transparente */
+    .balloon-options-container {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: transparent;
+      text-align: center;
+    }
+    /* Frase com fundo azul, arredondado, para a pergunta */
+    .balloon-question {
+      font-size: 1rem;
+      background-color: #05bddc;
+      color: #fff;
+      padding: 8px;
+      border-radius: 8px;
+      margin-bottom: 5px;
+    }
+    /* Utilizando o select com a classe do Bootstrap para padronização */
+    .balloon-select {
+      margin-bottom: 5px;
     }
     /* Botões de navegação */
     .nav-buttons {
@@ -187,210 +215,474 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Carrinho -->
-    <div id="cartContainer">
-      🛒 <span id="cartValue"></span>
-    </div>
-    
-    <!-- Título -->
-    <div class="title-wrapper">
-      <div class="page-title">Decorações</div>
-    </div>
-    
-    <!-- Tela de atenção -->
-    <div id="atencao">
-      Atenção: Você pode escolher apenas 1 decoração.
-    </div>
-    
-    <!-- Grid de itens de decoração -->
-    <div class="row">
-      <!-- BOSQUE PEQUENO -->
-      <div class="col-md-6 decoration-item" data-decoration="Bosque Pequeno" data-price="750">
-        <div class="uploads">
-          <div class="photo-upload"><span>Foto 1</span></div>
-          <div class="photo-upload"><span>Foto 2</span></div>
-          <div class="photo-upload"><span>Foto 3</span></div>
+  <div class="wrapper">
+    <div class="container">
+      <!-- Carrinho -->
+      <div id="cartContainer">
+        🛒 <span id="cartValue"></span>
+      </div>
+      
+      <!-- Título -->
+      <div class="title-wrapper">
+        <div class="page-title">Decorações</div>
+      </div>
+      
+      <!-- Tela de atenção -->
+      <div id="atencao">
+        Atenção: Você pode escolher apenas 1 decoração.
+      </div>
+      
+      <!-- Grid de itens de decoração (seção principal) -->
+      <div class="row">
+        <!-- Bosque Pequeno -->
+        <div class="col-md-6">
+          <div class="decoration-item" data-decoration="Bosque Pequeno" data-price="750">
+            <div class="uploads">
+              <div class="photo-upload final">
+                <img src="decorações/bosque pequeno 1.jpg" alt="Bosque Pequeno">
+              </div>
+            </div>
+            <div class="decoration-name">BOSQUE PEQUENO</div>
+            <div class="decoration-price">Preço: R$ 750,00</div>
+            <div class="description-balloon">
+              1 Painel sublimado<br>
+              1 Trio de cilindros<br>
+              2 Árvores<br>
+              10 Peças decorativas<br>
+              Animais e louças para bolo e doces<br>
+              1 Tapete<br>
+              1 Estrutura de mesa<br>
+              Montagem e desmontagem<br>
+              (Não incluem os balões)
+            </div>
+          </div>
+          <div class="balloon-options-container">
+            <div class="balloon-question">Deseja adicionar balões na sua decoração?</div>
+            <select class="form-control balloon-select">
+              <option value="">Selecione</option>
+              <option value="308">Bosque Pequeno: R$ 308,00</option>
+            </select>
+          </div>
         </div>
-        <div class="decoration-name">BOSQUE PEQUENO</div>
-        <div class="decoration-price">Preço: R$ 750,00</div>
-        <div class="description-balloon">
-          1 PAINEL SUBLIMADO<br>
-          1 TRIO DE CILINDROS<br>
-          2 ÀRVORES<br>
-          10 PEÇAS DECORATIVAS<br>
-          ANIMAIS E LOUÇAS PARA BOLO E DOCES<br>
-          1 TAPETE<br>
-          1 ESTRUTURA DE MESA<br>
-          MONTAGEM E DESMONTAGEM<br>
-          (Não incluem os balões)
+        
+        <!-- Bosque Médio -->
+        <div class="col-md-6">
+          <div class="decoration-item" data-decoration="Bosque Médio" data-price="900">
+            <div class="uploads">
+              <div class="photo-upload final">
+                <img src="decorações/bosque médio 1.png" alt="Bosque Médio">
+              </div>
+            </div>
+            <div class="decoration-name">BOSQUE MÉDIO</div>
+            <div class="decoration-price">Preço: R$ 900,00</div>
+            <div class="description-balloon">
+              2 Painéis sublimados<br>
+              1 Trio de cilindros<br>
+              10 Peças decorativas<br>
+              Animais e louças para bolo e doces<br>
+              1 Estrutura de mesa<br>
+              1 Tapete<br>
+              Montagem e desmontagem<br>
+              (Não incluem os balões)
+            </div>
+          </div>
+          <div class="balloon-options-container">
+            <div class="balloon-question">Deseja adicionar balões na sua decoração?</div>
+            <select class="form-control balloon-select">
+              <option value="">Selecione</option>
+              <option value="550">Bosque Médio: R$ 550,00</option>
+            </select>
+          </div>
+        </div>
+        
+        <!-- Bosque Grande -->
+        <div class="col-md-6">
+          <div class="decoration-item" data-decoration="Bosque Grande" data-price="1500">
+            <div class="uploads">
+              <div class="photo-upload final">
+                <img src="decorações/bosque grande 1.jpg" alt="Bosque Grande">
+              </div>
+            </div>
+            <div class="decoration-name">BOSQUE GRANDE</div>
+            <div class="decoration-price">Preço: R$ 1.500,00</div>
+            <div class="description-balloon">
+              4 Painéis sublimados ou em MDF<br>
+              4 Árvores<br>
+              2 Trios de cilindros de cada<br>
+              15 Peças decorativas<br>
+              Animais e louças para bolo e doces<br>
+              1 Tapete<br>
+              1 Estrutura de mesa<br>
+              Montagem e desmontagem<br>
+              (Não incluem os balões)
+            </div>
+          </div>
+          <div class="balloon-options-container">
+            <div class="balloon-question">Deseja adicionar balões na sua decoração?</div>
+            <select class="form-control balloon-select">
+              <option value="">Selecione</option>
+              <option value="550">Bosque Grande: R$ 550,00</option>
+            </select>
+          </div>
+        </div>
+        
+        <!-- Princesas -->
+        <div class="col-md-6">
+          <div class="decoration-item" data-decoration="Princesas" data-price="950">
+            <div class="uploads">
+              <div class="photo-upload final">
+                <img src="decorações/princesas 1.jpg" alt="Princesas">
+              </div>
+            </div>
+            <div class="decoration-name">PRINCESAS</div>
+            <div class="decoration-price">Preço: R$ 950,00</div>
+            <div class="description-balloon">
+              1 Painel sublimado ou em MDF<br>
+              1 Trio de cilindros<br>
+              10 Peças decorativas<br>
+              Louças para bolo e doces<br>
+              1 Tapete<br>
+              1 Estrutura de mesa<br>
+              1 Lousa<br>
+              Montagem e desmontagem<br>
+              (Não incluem os balões)
+            </div>
+          </div>
+          <div class="balloon-options-container">
+            <div class="balloon-question">Deseja adicionar balões na sua decoração?</div>
+            <select class="form-control balloon-select">
+              <option value="">Selecione</option>
+              <option value="605">Princesas: R$ 605,00</option>
+            </select>
+          </div>
+        </div>
+        
+        <!-- Fazendinha -->
+        <div class="col-md-6">
+          <div class="decoration-item" data-decoration="Fazendinha" data-price="950">
+            <div class="uploads">
+              <div class="photo-upload final">
+                <img src="decorações/fazendinha 1.jpg" alt="Fazendinha">
+              </div>
+            </div>
+            <div class="decoration-name">FAZENDINHA</div>
+            <div class="decoration-price">Preço: R$ 950,00</div>
+            <div class="description-balloon">
+              1 Painel sublimado - celeiro<br>
+              1 Trio de cilindros<br>
+              10 Peças decorativas<br>
+              Animais e louças para bolo e doces<br>
+              1 Estrutura de mesa<br>
+              1 Tapete<br>
+              Montagem e desmontagem<br>
+              (Não incluem os balões)
+            </div>
+          </div>
+          <div class="balloon-options-container">
+            <div class="balloon-question">Deseja adicionar balões na sua decoração?</div>
+            <select class="form-control balloon-select">
+              <option value="">Selecione</option>
+              <option value="605">Fazendinha: R$ 605,00</option>
+            </select>
+          </div>
+        </div>
+        
+        <!-- Harry Potter -->
+        <div class="col-md-6">
+          <div class="decoration-item" data-decoration="Harry Potter" data-price="1000">
+            <div class="uploads">
+              <div class="photo-upload final">
+                <img src="decorações/harry potter 1.jpg" alt="Harry Potter">
+              </div>
+            </div>
+            <div class="decoration-name">HARRY POTTER</div>
+            <div class="decoration-price">Preço: R$ 1.000,00</div>
+            <div class="description-balloon">
+              1 Painel sublimado<br>
+              1 Trio de cilindros<br>
+              10 Peças decorativas<br>
+              Louças para bolo e doces<br>
+              1 Estrutura de mesa<br>
+              1 Tapete<br>
+              1 Gaiola<br>
+              1 Portal 3/4 - painel<br>
+              1 Lousa<br>
+              Montagem e desmontagem<br>
+              (Não incluem os balões)
+            </div>
+          </div>
+          <div class="balloon-options-container">
+            <div class="balloon-question">Deseja adicionar balões na sua decoração?</div>
+            <select class="form-control balloon-select">
+              <option value="">Selecione</option>
+              <option value="605">Harry Potter: R$ 605,00</option>
+            </select>
+          </div>
         </div>
       </div>
       
-      <!-- BOSQUE MÉDIO -->
-      <div class="col-md-6 decoration-item" data-decoration="Bosque Médio" data-price="900">
-        <div class="uploads">
-          <div class="photo-upload"><span>Foto 1</span></div>
-          <div class="photo-upload"><span>Foto 2</span></div>
-          <div class="photo-upload"><span>Foto 3</span></div>
+      <!-- Seção: Decorações Específicas -->
+      <div class="title-wrapper" style="margin-top:40px;">
+        <div class="page-title" style="font-size:2rem;">Decorações Específicas</div>
+      </div>
+      
+      <div class="row">
+        <!-- Decoração Específica 1 -->
+        <div class="col-md-6">
+          <div class="decoration-item" data-decoration="Decoração Específica 1" data-price="708">
+            <div class="uploads">
+              <div class="photo-upload final">
+                <img src="decorações/festa na caixa 1.jpg" alt="Decoração Específica 1">
+              </div>
+            </div>
+            <div class="decoration-name">Decoração Específica 1</div>
+            <div class="decoration-price">Preço: R$ 708,00</div>
+            <div class="description-balloon">
+              07 peças decorativas (suportes de doces e temáticos em feltro)<br>
+              01 Trio de Cilindros<br>
+              01 painel sublimado.
+            </div>
+          </div>
+          <div class="balloon-options-container">
+            <div class="balloon-question">Deseja adicionar balões na sua decoração?</div>
+            <select class="form-control balloon-select">
+              <option value="">Selecione</option>
+              <option value="299">2 m cores tradicionais: R$ 299,00</option>
+              <option value="390">2m usando cores metálicas: R$ 390,00</option>
+              <option value="364">3m cores tradicionais: R$ 364,00</option>
+              <option value="585">3m cores metálicas: R$ 585,00</option>
+              <option value="520">4m nas cores tradicionais: R$ 520,00</option>
+              <option value="702">4m nas cores metálicas: R$ 702,00</option>
+            </select>
+          </div>
         </div>
-        <div class="decoration-name">BOSQUE MÉDIO</div>
-        <div class="decoration-price">Preço: R$ 900,00</div>
-        <div class="description-balloon">
-          2 PAINÉIS SUBLIMADOS<br>
-          1 TRIO DE CILINDROS<br>
-          10 PEÇAS DECORATIVAS<br>
-          ANIMAIS E LOUÇAS PARA BOLO E DOCES<br>
-          1 ESTRUTURA DE MESA<br>
-          1 TAPETE<br>
-          MONTAGEM E DESMONTAGEM<br>
-          (Não incluem os balões)
+        <!-- Decoração Específica 2 -->
+        <div class="col-md-6">
+          <div class="decoration-item" data-decoration="Decoração Específica 2" data-price="888">
+            <div class="uploads">
+              <div class="photo-upload final">
+                <img src="decorações/festa na caixa 2.jpg" alt="Decoração Específica 2">
+              </div>
+            </div>
+            <div class="decoration-name">Decoração Específica 2</div>
+            <div class="decoration-price">Preço: R$ 888,00</div>
+            <div class="description-balloon">
+              01 painel sublimado<br>
+              01 Trio de Cilindros<br>
+              10 peças decorativas (suportes de doces e temáticos em feltro)<br>
+              01 mesa G
+            </div>
+          </div>
+          <div class="balloon-options-container">
+            <div class="balloon-question">Deseja adicionar balões na sua decoração?</div>
+            <select class="form-control balloon-select">
+              <option value="">Selecione</option>
+              <option value="299">2 m cores tradicionais: R$ 299,00</option>
+              <option value="390">2m usando cores metálicas: R$ 390,00</option>
+              <option value="364">3m cores tradicionais: R$ 364,00</option>
+              <option value="585">3m cores metálicas: R$ 585,00</option>
+              <option value="520">4m nas cores tradicionais: R$ 520,00</option>
+              <option value="702">4m nas cores metálicas: R$ 702,00</option>
+            </select>
+          </div>
+        </div>
+        <!-- Decoração Específica 3 -->
+        <div class="col-md-6">
+          <div class="decoration-item" data-decoration="Decoração Específica 3" data-price="924">
+            <div class="uploads">
+              <div class="photo-upload final">
+                <img src="decorações/festa na caixa 3.jpg" alt="Decoração Específica 3">
+              </div>
+            </div>
+            <div class="decoration-name">Decoração Específica 3</div>
+            <div class="decoration-price">Preço: R$ 924,00</div>
+            <div class="description-balloon">
+              01 painel lateral picolé<br>
+              01 Trio de Cilindros<br>
+              10 peças decorativas (suportes de doces e temáticos em feltro)<br>
+              01 painel sublimado<br>
+              01 mesa G
+            </div>
+          </div>
+          <div class="balloon-options-container">
+            <div class="balloon-question">Deseja adicionar balões na sua decoração?</div>
+            <select class="form-control balloon-select">
+              <option value="">Selecione</option>
+              <option value="299">2 m cores tradicionais: R$ 299,00</option>
+              <option value="390">2m usando cores metálicas: R$ 390,00</option>
+              <option value="364">3m cores tradicionais: R$ 364,00</option>
+              <option value="585">3m cores metálicas: R$ 585,00</option>
+              <option value="520">4m nas cores tradicionais: R$ 520,00</option>
+              <option value="702">4m nas cores metálicas: R$ 702,00</option>
+            </select>
+          </div>
+        </div>
+        <!-- Decoração Específica 4 -->
+        <div class="col-md-6">
+          <div class="decoration-item" data-decoration="Decoração Específica 4" data-price="1034">
+            <div class="uploads">
+              <div class="photo-upload final">
+                <img src="decorações/festa na caixa 4.jpg" alt="Decoração Específica 4">
+              </div>
+            </div>
+            <div class="decoration-name">Decoração Específica 4</div>
+            <div class="decoration-price">Preço: R$ 1.034,00</div>
+            <div class="description-balloon">
+              01 painel sublimado<br>
+              02 painéis laterais picolés<br>
+              01 Trio de Cilindros<br>
+              01 mesa G<br>
+              10 peças decorativas (suportes de doces e temáticos em feltro).
+            </div>
+          </div>
+          <div class="balloon-options-container">
+            <div class="balloon-question">Deseja adicionar balões na sua decoração?</div>
+            <select class="form-control balloon-select">
+              <option value="">Selecione</option>
+              <option value="520">4m nas cores tradicionais: R$ 520,00</option>
+              <option value="702">4m nas cores metálicas: R$ 702,00</option>
+              <option value="650">5m cores tradicionais: R$ 650,00</option>
+              <option value="780">5m cores metálicas: R$ 780,00</option>
+            </select>
+          </div>
+        </div>
+        <!-- Decoração Específica 5 -->
+        <div class="col-md-6">
+          <div class="decoration-item" data-decoration="Decoração Específica 5" data-price="1166">
+            <div class="uploads">
+              <div class="photo-upload final">
+                <img src="decorações/festa na caixa 5.jpg" alt="Decoração Específica 5">
+              </div>
+            </div>
+            <div class="decoration-name">Decoração Específica 5</div>
+            <div class="decoration-price">Preço: R$ 1.166,00</div>
+            <div class="description-balloon">
+              03 painéis picolé e/ou sublimados<br>
+              01 Trio de Cilindros<br>
+              01 mesa G<br>
+              10 peças decorativas (suportes de doces e temáticos em feltro)
+            </div>
+          </div>
+          <div class="balloon-options-container">
+            <div class="balloon-question">Deseja adicionar balões na sua decoração?</div>
+            <select class="form-control balloon-select">
+              <option value="">Selecione</option>
+              <option value="520">4m nas cores tradicionais: R$ 520,00</option>
+              <option value="702">4m nas cores metálicas: R$ 702,00</option>
+              <option value="650">5m cores tradicionais: R$ 650,00</option>
+              <option value="780">5m cores metálicas: R$ 780,00</option>
+            </select>
+          </div>
+        </div>
+        <!-- Decoração Específica 6 -->
+        <div class="col-md-6">
+          <div class="decoration-item" data-decoration="Decoração Específica 6" data-price="2420">
+            <div class="uploads">
+              <div class="photo-upload final">
+                <img src="decorações/festa na caixa super luxo.jpg" alt="Decoração Específica 6">
+              </div>
+            </div>
+            <div class="decoration-name">Decoração Específica 6</div>
+            <div class="decoration-price">Preço: R$ 2.420,00</div>
+            <div class="description-balloon">
+              Decoração completa com Totens, led da idade, personalização do nome do aniversariante e balões!
+            </div>
+          </div>
+          <div class="balloon-options-container">
+            <div class="balloon-question">Deseja adicionar balões na sua decoração?</div>
+            <select class="form-control balloon-select">
+              <option value="">Selecione</option>
+              <option value="520">4m nas cores tradicionais: R$ 520,00</option>
+              <option value="702">4m nas cores metálicas: R$ 702,00</option>
+              <option value="650">5m cores tradicionais: R$ 650,00</option>
+              <option value="780">5m cores metálicas: R$ 780,00</option>
+            </select>
+          </div>
         </div>
       </div>
       
-      <!-- BOSQUE GRANDE -->
-      <div class="col-md-6 decoration-item" data-decoration="Bosque Grande" data-price="1500">
-        <div class="uploads">
-          <div class="photo-upload"><span>Foto 1</span></div>
-          <div class="photo-upload"><span>Foto 2</span></div>
-          <div class="photo-upload"><span>Foto 3</span></div>
-        </div>
-        <div class="decoration-name">BOSQUE GRANDE</div>
-        <div class="decoration-price">Preço: R$ 1.500,00</div>
-        <div class="description-balloon">
-          4 PAINÉIS SUBLIMADOS OU EM MDF<br>
-          4 ÀRVORES<br>
-          2 TRIOS DE CILINDROS DE CADA<br>
-          15 PEÇAS DECORATIVAS<br>
-          ANIMAIS E LOUÇAS PARA BOLO E DOCES<br>
-          1 TAPETE<br>
-          1 ESTRUTURA DE MESA<br>
-          MONTAGEM E DESMONTAGEM<br>
-          (Não incluem os balões)
-        </div>
+      <!-- Botões de navegação -->
+      <div class="nav-buttons">
+        <button type="button" class="btn-custom" id="voltarPage10">Voltar</button>
+        <button type="button" class="btn-custom" id="proximo">Próximo</button>
       </div>
-      
-      <!-- PRINCESAS -->
-      <div class="col-md-6 decoration-item" data-decoration="Princesas" data-price="950">
-        <div class="uploads">
-          <div class="photo-upload"><span>Foto 1</span></div>
-          <div class="photo-upload"><span>Foto 2</span></div>
-          <div class="photo-upload"><span>Foto 3</span></div>
-        </div>
-        <div class="decoration-name">PRINCESAS</div>
-        <div class="decoration-price">Preço: R$ 950,00</div>
-        <div class="description-balloon">
-          1 PAINÉL SUBLIMADO OU EM MDF<br>
-          1 TRIO DE CILINDROS<br>
-          10 PEÇAS DECORATIVAS<br>
-          LOUÇAS PARA BOLO E DOCES<br>
-          1 TAPETE<br>
-          1 ESTRUTURA DE MESA<br>
-          1 LOUSA<br>
-          MONTAGEM E DESMONTAGEM<br>
-          (Não incluem os balões)
-        </div>
-      </div>
-      
-      <!-- FAZENDINHA -->
-      <div class="col-md-6 decoration-item" data-decoration="Fazendinha" data-price="950">
-        <div class="uploads">
-          <div class="photo-upload"><span>Foto 1</span></div>
-          <div class="photo-upload"><span>Foto 2</span></div>
-          <div class="photo-upload"><span>Foto 3</span></div>
-        </div>
-        <div class="decoration-name">FAZENDINHA</div>
-        <div class="decoration-price">Preço: R$ 950,00</div>
-        <div class="description-balloon">
-          1 PAINÉL SUBLIMADO - CELEIRO<br>
-          1 TRIO DE CILINDROS<br>
-          10 PEÇAS DECORATIVAS<br>
-          ANIMAIS E LOUÇAS PARA BOLO E DOCES<br>
-          1 ESTRUTURA DE MESA<br>
-          1 TAPETE<br>
-          MONTAGEM E DESMONTAGEM<br>
-          (Não incluem os balões)
-        </div>
-      </div>
-      
-      <!-- HARRY POTTER -->
-      <div class="col-md-6 decoration-item" data-decoration="Harry Potter" data-price="1000">
-        <div class="uploads">
-          <div class="photo-upload"><span>Foto 1</span></div>
-          <div class="photo-upload"><span>Foto 2</span></div>
-          <div class="photo-upload"><span>Foto 3</span></div>
-        </div>
-        <div class="decoration-name">HARRY POTTER</div>
-        <div class="decoration-price">Preço: R$ 1.000,00</div>
-        <div class="description-balloon">
-          1 PAINÉL SUBLIMADO<br>
-          1 TRIO DE CILINDROS<br>
-          10 PEÇAS DECORATIVAS<br>
-          LOUÇAS PARA BOLO E DOCES<br>
-          1 ESTRUTURA DE MESA<br>
-          1 TAPETE<br>
-          1 GAIOLA<br>
-          1 PORTAL 3/4 - PAINÉL<br>
-          1 LOUSA<br>
-          MONTAGEM E DESMONTAGEM<br>
-          (Não incluem os balões)
-        </div>
-      </div>
-    </div>
-    
-    <!-- Botões de navegação -->
-    <div class="nav-buttons">
-      <button type="button" class="btn-custom" id="voltarPage10">Voltar</button>
-      <button type="button" class="btn-custom" id="proximo">Próximo</button>
     </div>
   </div>
   
   <script>
-    // Função para formatar valores para o padrão brasileiro (ex.: R$1.234,56)
+    // Função para formatar valores no padrão brasileiro (ex.: R$1.234,56)
     function formatCurrency(value) {
       return "R$" + Number(value).toLocaleString("pt-BR", { minimumFractionDigits: 2 });
     }
     
     // Exibe o valor do carrinho (valor base salvo no localStorage)
     var totalFinal = parseFloat(localStorage.getItem("totalFinal")) || 0;
-    document.getElementById("cartValue").innerText = "Valor total da compra: " + formatCurrency(totalFinal);
+    document.getElementById("cartValue").innerText = " Valor parcial do evento: " + formatCurrency(totalFinal);
     
     // Salva o valor base do carrinho, sem a decoração, se ainda não estiver salvo
     if (!localStorage.getItem("baseDecorationTotal")) {
-      localStorage.setItem("baseDecorationTotal", total.toFixed(2));
+      localStorage.setItem("baseDecorationTotal", totalFinal.toFixed(2));
     }
     
-    // Adiciona comportamento clicável para os itens de decoração
+    // Comportamento clicável para os itens de decoração
     var decorationItems = document.querySelectorAll(".decoration-item");
     decorationItems.forEach(function(item) {
       item.addEventListener("click", function() {
-        // Remove a seleção de todos os itens (apenas 1 pode ser escolhido)
+        // Remove seleção de todas as decorações e dos selects de balões
         decorationItems.forEach(function(i) {
           i.classList.remove("selected");
         });
+        document.querySelectorAll('.balloon-select').forEach(function(select){
+          select.removeAttribute("data-previous-price");
+          select.selectedIndex = 0;
+        });
+        localStorage.removeItem("balloonPriceAdded");
+        
         // Seleciona o item clicado
         item.classList.add("selected");
-        // Obtém o nome, preço e atualiza a escolha no localStorage
         var selectedDecoration = item.getAttribute("data-decoration");
         var decorationPrice = parseFloat(item.getAttribute("data-price"));
         localStorage.setItem("selectedDecoration", selectedDecoration);
         
-        // Atualiza o carrinho: soma o preço da decoração ao valor base (baseDecorationTotal)
         var baseTotal = parseFloat(localStorage.getItem("baseDecorationTotal"));
         var newTotal = baseTotal + decorationPrice;
         localStorage.setItem("totalEvento", newTotal.toFixed(2));
-        document.getElementById("cartValue").innerText = "Valor total da compra: " + formatCurrency(newTotal);
+        document.getElementById("cartValue").innerText = "Valor parcial do evento : " + formatCurrency(newTotal);
         
-        // Salva o preço da decoração selecionada
         localStorage.setItem("decorationPriceAdded", decorationPrice);
       });
     });
     
-    // Configuração dos botões de navegação com verificação do modo edição
+    // Comportamento para os selects de balões (para decorações principais e específicas)
+    var balloonSelects = document.querySelectorAll(".balloon-select");
+    balloonSelects.forEach(function(select) {
+      select.addEventListener("change", function(e) {
+        var newPrice = parseFloat(select.value) || 0;
+        // Se o select estiver vazio, não altera o preço
+        var container = select.closest('.col-md-6');
+        var decorationItem = container.querySelector('.decoration-item');
+        if (!decorationItem.classList.contains("selected")) {
+          decorationItem.click();
+        }
+        // Obtém o preço previamente selecionado, se houver
+        var previousPrice = parseFloat(select.getAttribute('data-previous-price')) || 0;
+        var currentTotal = parseFloat(localStorage.getItem("totalEvento")) || 0;
+        currentTotal = currentTotal - previousPrice + newPrice;
+        localStorage.setItem("totalEvento", currentTotal.toFixed(2));
+        document.getElementById("cartValue").innerText = "Valor parcial do evento : " + formatCurrency(currentTotal);
+        
+        // Atualiza o atributo data com o novo valor
+        select.setAttribute('data-previous-price', newPrice);
+        // NOVA LINHA: Salva os dados do balão para uso na página 11
+        localStorage.setItem("selectedBalloon", select.options[select.selectedIndex].text);
+        localStorage.setItem("balloonPriceAdded", newPrice);
+      });
+    });
+    
+    // Configuração dos botões de navegação
     window.onload = function() {
       var editMode = localStorage.getItem("edit_decoracao");
       if (editMode === "true") {
-        // Modo edição: "Voltar" retorna para a Página 11 e "Próximo" atua como "Salvar"
         document.getElementById("voltarPage10").addEventListener("click", function() {
           window.location.href = "pagina11.html";
         });
@@ -400,7 +692,6 @@
           window.location.href = "pagina11.html";
         });
       } else {
-        // Fluxo normal: "Voltar" retorna para a Página 9 e "Próximo" direciona para a Página 11
         document.getElementById("voltarPage10").addEventListener("click", function() {
           window.location.href = "pagina9.html";
         });
