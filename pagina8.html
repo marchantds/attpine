@@ -6,34 +6,32 @@
   <title>Pine Tree Farm - Bebidas Alcoólicas</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
   <style>
-    /* Estilos gerais para cobrir a tela toda */
+    /* Define a imagem de fundo para cobrir toda a página */
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
+      width: 100%;
+      min-height: 100%;
       font-family: 'Roboto', sans-serif;
-      background-color: #F9F9F9;
-      background: rgba(106, 190, 155, 0.1);
-      background-image: linear-gradient(white, white), linear-gradient(145deg, #FFD700, #6DBF79);
-      background-origin: border-box;
-      background-clip: content-box, border-box;
+      background: url("fundo de pagina.png") no-repeat center center fixed;
+      background-size: cover;
       overflow-x: hidden;
     }
+    /* Wrapper: envolve todo o conteúdo e aplica a borda com gradiente */
+    .wrapper {
+      width: 100%;
+      min-height: 100vh;
+      box-sizing: border-box;
+      border: 5px solid transparent;
+      border-image: linear-gradient(90deg, #05bddc, #FFD700) 1;
+    }
+    /* Container: centraliza o conteúdo sem fundo branco ou sombra */
     .container {
       position: relative;
-      min-height: 100vh;
       padding: 20px;
       margin: 20px auto;
       max-width: 1200px;
-      background-color: #fff;
-      background-image: url("fundo de pagina.png");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      box-shadow: 0 0 15px rgba(255,215,0,0.6);
-      border: 5px solid transparent;
-      border-radius: 15px;
-      border-image: linear-gradient(90deg, #05bddc, #FFD700) 1;
+      background: transparent; /* Fundo transparente */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -54,6 +52,19 @@
       margin: 80px auto 20px;
       text-shadow: 2px 2px 3px rgba(0,0,0,0.2);
     }
+    /* Caixa de atenção, semelhante à da página 3 */
+    #alertBox {
+      margin-top: 20px;
+      background-color: #FFF3CD;
+      border: 1px solid #FFEEBA;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: #856404;
+      text-align: center;
+      width: 100%;
+      max-width: 600px;
+    }
     .row {
       margin-top: 20px;
       width: 100%;
@@ -68,17 +79,18 @@
     .photo-upload {
       width: 150px;
       height: 150px;
-      border: 2px dashed #ccc;
       margin: 0 auto 15px;
       display: flex;
       align-items: center;
       justify-content: center;
       background-color: #00692e;
       border-radius: 8px;
+      overflow: hidden;
     }
-    .photo-upload span {
-      color: #fff;
-      font-weight: bold;
+    .photo-upload img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
     }
     .product-name {
       font-size: 1.1rem;
@@ -156,46 +168,59 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Carrinho -->
-    <div id="cartContainer">
-      🛒 <span id="cartValue"></span>
-    </div>
-    
-    <!-- Título centralizado -->
-    <div class="title-wrapper">
-      <div class="page-title">Bebidas Alcoólicas</div>
-    </div>
-    
-    <!-- Grid de itens -->
-    <div class="row">
-      <!-- Item 1: Cerveja Heineken -->
-      <div class="col-md-4 product-item">
-        <div class="photo-upload"><span>Heineken</span></div>
-        <div class="product-name">Cerveja Heineken Long Neck 330ml</div>
-        <div class="unit-price">R$ 13,00</div>
-        <input type="number" class="quantity-input" data-price="13" min="0" value="0">
+  <div class="wrapper">
+    <div class="container">
+      <!-- Carrinho -->
+      <div id="cartContainer">
+        🛒 <span id="cartValue"></span>
       </div>
-      <!-- Item 2: Cerveja Corona -->
-      <div class="col-md-4 product-item">
-        <div class="photo-upload"><span>Corona</span></div>
-        <div class="product-name">Cerveja Corona Long Neck 330ml</div>
-        <div class="unit-price">R$ 13,00</div>
-        <input type="number" class="quantity-input" data-price="13" min="0" value="0">
+      
+      <!-- Título centralizado -->
+      <div class="title-wrapper">
+        <div class="page-title">Bebidas Alcoólicas</div>
       </div>
-      <!-- Item 3: Stella Artois -->
-      <div class="col-md-4 product-item">
-        <div class="photo-upload"><span>Stella</span></div>
-        <div class="product-name">STELLA ARTOIS SEM Glúten 330ml</div>
-        <div class="unit-price">R$ 13,00</div>
-        <input type="number" class="quantity-input" data-price="13" min="0" value="0">
+      
+      <!-- Caixa de atenção com a mensagem -->
+      <div id="alertBox">
+        A cerveja adquirida antecipadamente custará R$13,00, sendo R$16,00 no dia do evento.
       </div>
-    </div>
-    
-    <!-- Botões de navegação -->
-    <div class="nav-buttons">
-      <button type="button" class="btn-custom" id="voltarPage8">Voltar</button>
-      <button type="button" class="btn-custom" id="proximo">Próximo</button>
+      
+      <!-- Grid de itens -->
+      <div class="row">
+        <!-- Item 1: Cerveja Heineken -->
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="cervejas/heineken.jpg" alt="Heineken">
+          </div>
+          <div class="product-name">Cerveja Heineken long neck 330ml</div>
+          <div class="unit-price">R$ 13,00</div>
+          <input type="number" class="quantity-input" data-price="13" min="0" value="0">
+        </div>
+        <!-- Item 2: Cerveja Corona -->
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="cervejas/corona.jpg" alt="Corona">
+          </div>
+          <div class="product-name">Cerveja Corona long neck 330ml</div>
+          <div class="unit-price">R$ 13,00</div>
+          <input type="number" class="quantity-input" data-price="13" min="0" value="0">
+        </div>
+        <!-- Item 3: Stella Artois -->
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="cervejas/stella.jpg" alt="Stella Artois">
+          </div>
+          <div class="product-name">Stella Artois Gold - sem glútem 330ml</div>
+          <div class="unit-price">R$ 13,00</div>
+          <input type="number" class="quantity-input" data-price="13" min="0" value="0">
+        </div>
+      </div>
+      
+      <!-- Botões de navegação -->
+      <div class="nav-buttons">
+        <button type="button" class="btn-custom" id="voltarPage8">Voltar</button>
+        <button type="button" class="btn-custom" id="proximo">Próximo</button>
+      </div>
     </div>
   </div>
   
@@ -215,7 +240,7 @@
     var originalTotal = baseTotal;
     
     // Exibe o valor inicial do carrinho
-    document.getElementById("cartValue").innerText = "Valor total da compra: " + formatCurrency(baseTotal);
+    document.getElementById("cartValue").innerText = "Valor parcial do evento: " + formatCurrency(baseTotal);
     
     // Função para atualizar o carrinho com o custo das bebidas
     function updateBeverageTotal() {
@@ -227,7 +252,7 @@
       });
       var newTotal = baseTotal + beverageTotal;
       localStorage.setItem("totalEvento", newTotal.toFixed(2));
-      document.getElementById("cartValue").innerText = "Valor total da compra: " + formatCurrency(newTotal);
+      document.getElementById("cartValue").innerText = " Valor parcial do evento: " + formatCurrency(newTotal);
     }
     
     // Atualiza o total quando o usuário altera o valor dos inputs
