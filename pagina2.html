@@ -6,30 +6,34 @@
   <title>Pine Tree Farm - Dados Detalhados</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
   <style>
+    /* Atualiza o fundo da página para igualar a página3 */
     body {
       font-family: 'Roboto', sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #F9F9F9;
-      background-image: linear-gradient(white, white), linear-gradient(145deg, #FFD700, #6DBF79);
+      background: url("fundo de pagina.png") no-repeat center center fixed;
+      background-size: cover;
       min-height: 100vh;
       box-sizing: border-box;
       overflow-x: hidden;
     }
+    /* Nova div wrapper para a borda com gradiente */
+    .wrapper {
+      width: 100%;
+      min-height: 100vh;
+      box-sizing: border-box;
+      border: 5px solid transparent;
+      border-image: linear-gradient(90deg, #05bddc, #FFD700) 1;
+    }
+    /* Atualiza o container para ter fundo transparente */
     .container {
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
       padding: 20px;
-      border: 5px solid transparent;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(255,215,0,0.6);
-      background-color: #fff;
-      background-image: url("fundo de pagina.png");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
+      box-sizing: border-box;
+      background: transparent;
     }
     .form-container {
       max-width: 700px;
@@ -37,7 +41,7 @@
       padding: 30px;
       background-color: #A5D6A7;
       border-radius: 15px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.15);
+      box-shadow: 0 0 15px rgba(255,215,0,0.6);
       border: 1px solid #ddd;
     }
     .form-container h3 {
@@ -73,6 +77,7 @@
       color: white;
       width: 100%;
       margin-top: 10px;
+      cursor: pointer;
     }
     .btn-custom:hover {
       background: linear-gradient(90deg, #00692e, #05bddc);
@@ -89,80 +94,94 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="form-container">
-      <h3>Dados complementares do evento</h3>
-      <form id="form-detalhado">
-        <div class="row">
-          <div class="col-md-6">
-            <label for="nomeResponsavel2" class="form-label">Nome do(a) responsável  <span class="obrigatorio">*</span></label>
-            <input type="text" class="form-control" id="nomeResponsavel2" required>
+  <!-- Adiciona a div wrapper para a borda com gradiente -->
+  <div class="wrapper">
+    <div class="container">
+      <div class="form-container">
+        <h3>Dados complementares do evento</h3>
+        <form id="form-detalhado">
+          <div class="row">
+            <div class="col-md-6">
+              <label for="nomeResponsavel2" class="form-label">Nome do(a) responsável <span class="obrigatorio">*</span></label>
+              <input type="text" class="form-control" id="nomeResponsavel2" required>
+            </div>
+            <div class="col-md-6">
+              <label for="telefone1" class="form-label">Telefone do(a) responsável 1 <span class="obrigatorio">*</span></label>
+              <input type="tel" class="form-control" id="telefone1" required>
+            </div>
           </div>
-          <div class="col-md-6">
-            <label for="telefone1" class="form-label">Telefone do(a) responsável 1 <span class="obrigatorio">*</span></label>
-            <input type="tel" class="form-control" id="telefone1" required>
+          <!-- Novos campos para CPF e RG -->
+          <div class="row">
+            <div class="col-md-6">
+              <label for="cpf" class="form-label">CPF <span class="obrigatorio">*</span></label>
+              <input type="text" class="form-control" id="cpf">
+            </div>
+            <div class="col-md-6">
+              <label for="rg" class="form-label">RG <span class="obrigatorio">*</span></label>
+              <input type="text" class="form-control" id="rg">
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <label for="nomeResponsavel2b" class="form-label">Nome do(a) 2° responsável  <span class="obrigatorio">*</span></label>
-            <input type="text" class="form-control" id="nomeResponsavel2b" required>
+          <div class="row">
+            <div class="col-md-6">
+              <label for="nomeResponsavel2b" class="form-label">Nome do(a) 2° responsável <span class="obrigatorio">*</span></label>
+              <input type="text" class="form-control" id="nomeResponsavel2b" required>
+            </div>
+            <div class="col-md-6">
+              <label for="telefone2" class="form-label">Telefone do 2° responsável <span class="obrigatorio">*</span></label>
+              <input type="tel" class="form-control" id="telefone2" required>
+            </div>
           </div>
-          <div class="col-md-6">
-            <label for="telefone2" class="form-label">Telefone do 2° responsável <span class="obrigatorio">*</span></label>
-            <input type="tel" class="form-control" id="telefone2" required>
+          <div class="mb-3">
+            <label for="email" class="form-label">E-mail <span class="obrigatorio">*</span></label>
+            <input type="email" class="form-control" id="email" required>
           </div>
-        </div>
-        <div class="mb-3">
-          <label for="email" class="form-label">E-mail <span class="obrigatorio">*</span></label>
-          <input type="email" class="form-control" id="email" required>
-        </div>
-        <div class="mb-3">
-          <label for="cep" class="form-label">CEP (somente números) <span class="obrigatorio">*</span></label>
-          <input type="text" class="form-control" id="cep" maxlength="9" required>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <label for="logradouro" class="form-label">Logradouro <span class="obrigatorio">*</span></label>
-            <input type="text" class="form-control" id="logradouro" disabled>
+          <div class="mb-3">
+            <label for="cep" class="form-label">CEP (somente números) <span class="obrigatorio">*</span></label>
+            <input type="text" class="form-control" id="cep" maxlength="9" required>
           </div>
-          <div class="col-md-6">
-            <label for="bairro" class="form-label">Bairro <span class="obrigatorio">*</span></label>
-            <input type="text" class="form-control" id="bairro" disabled>
+          <div class="row">
+            <div class="col-md-6">
+              <label for="logradouro" class="form-label">Logradouro <span class="obrigatorio">*</span></label>
+              <input type="text" class="form-control" id="logradouro" disabled>
+            </div>
+            <div class="col-md-6">
+              <label for="bairro" class="form-label">Bairro <span class="obrigatorio">*</span></label>
+              <input type="text" class="form-control" id="bairro" disabled>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <label for="cidade" class="form-label">Cidade <span class="obrigatorio">*</span></label>
-            <input type="text" class="form-control" id="cidade" disabled>
+          <div class="row">
+            <div class="col-md-6">
+              <label for="cidade" class="form-label">Cidade <span class="obrigatorio">*</span></label>
+              <input type="text" class="form-control" id="cidade" disabled>
+            </div>
+            <div class="col-md-6">
+              <label for="estado" class="form-label">Estado <span class="obrigatorio">*</span></label>
+              <input type="text" class="form-control" id="estado" disabled>
+            </div>
           </div>
-          <div class="col-md-6">
-            <label for="estado" class="form-label">Estado <span class="obrigatorio">*</span></label>
-            <input type="text" class="form-control" id="estado" disabled>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="numeroResidencia" class="form-label">Número da residência <span class="obrigatorio">*</span></label>
+                <input type="text" class="form-control" id="numeroResidencia" required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="complemento" class="form-label">Complemento <span class="obrigatorio">*</span></label>
+                <input type="text" class="form-control" id="complemento" required>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="mb-3">
-          <label for="numeroResidencia" class="form-label">Número da residência <span class="obrigatorio">*</span></label>
-          <input type="text" class="form-control" id="numeroResidencia" required>
-        </div>
-        <div class="mb-3">
-          <label for="complemento" class="form-label">Complemento <span class="obrigatorio">*</span></label>
-          <input type="text" class="form-control" id="complemento" required>
-        </div>
-        <div class="mb-3">
-          <label for="idade" class="form-label">Idade que o(a) aniversariante completará <span class="obrigatorio">*</span></label>
-          <input type="number" class="form-control" id="idade" required>
-        </div>
-        <div class="d-flex justify-content-between mt-3 gap-3">
-          <button type="button" class="btn btn-custom" id="voltarPagina2">Voltar</button>
-          <button type="button" class="btn btn-custom" id="proximoPagina3">Próximo</button>
-        </div>
-      </form>
+          <div class="d-flex justify-content-between mt-3 gap-3">
+            <button type="button" class="btn btn-custom" id="voltarPagina2">Voltar</button>
+            <button type="button" class="btn btn-custom" id="proximoPagina3">Próximo</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
-
   <script>
-    // Busca de CEP permanece igual
     document.getElementById('cep').addEventListener('blur', function() {
       var cep = document.getElementById('cep').value.replace('-', '');
       if (cep.length === 8) {
@@ -184,14 +203,12 @@
       }
     });
 
-    // Preenche o campo "Nome do(a) responsável" com o valor salvo no localStorage
     window.addEventListener("load", function() {
       document.getElementById("nomeResponsavel2").value = localStorage.getItem("nomeResponsavel") || "";
       
       var editMode = localStorage.getItem("edit_complementares");
       console.log("edit_complementares =", editMode);
       if (editMode === "true") {
-        // Preenche os outros campos com os dados salvos
         document.getElementById("telefone1").value = localStorage.getItem("telefone1Detalhado") || "";
         document.getElementById("nomeResponsavel2b").value = localStorage.getItem("nomeResponsavel2bDetalhado") || "";
         document.getElementById("telefone2").value = localStorage.getItem("telefone2Detalhado") || "";
@@ -203,9 +220,9 @@
         document.getElementById("estado").value = localStorage.getItem("estadoDetalhado") || "";
         document.getElementById("numeroResidencia").value = localStorage.getItem("numeroResidenciaDetalhado") || "";
         document.getElementById("complemento").value = localStorage.getItem("complementoDetalhado") || "";
-        document.getElementById("idade").value = localStorage.getItem("idadeDetalhado") || "";
+        document.getElementById("cpf").value = localStorage.getItem("cpfDetalhado") || "";
+        document.getElementById("rg").value = localStorage.getItem("rgDetalhado") || "";
         
-        // Altera o botão "Próximo" para "Salvar" e define sua ação
         var proximoBtn = document.getElementById("proximoPagina3");
         proximoBtn.innerText = "Salvar";
         proximoBtn.onclick = function() {
@@ -221,18 +238,16 @@
           localStorage.setItem("estadoDetalhado", document.getElementById("estado").value);
           localStorage.setItem("numeroResidenciaDetalhado", document.getElementById("numeroResidencia").value);
           localStorage.setItem("complementoDetalhado", document.getElementById("complemento").value);
-          localStorage.setItem("idadeDetalhado", document.getElementById("idade").value);
-          // Remove a flag e retorna ao resumo
+          localStorage.setItem("cpfDetalhado", document.getElementById("cpf").value);
+          localStorage.setItem("rgDetalhado", document.getElementById("rg").value);
           localStorage.removeItem("edit_complementares");
           window.location.href = "pagina11.html";
         };
 
-        // Configura o botão "Voltar" para retornar ao resumo sem salvar
         document.getElementById("voltarPagina2").onclick = function() {
           window.location.href = "pagina11.html";
         };
       } else {
-        // Fluxo normal: salva os dados e redireciona para pagina3.html
         document.getElementById("proximoPagina3").onclick = function() {
           localStorage.setItem("nomeResponsavel", document.getElementById("nomeResponsavel2").value);
           localStorage.setItem("telefone1Detalhado", document.getElementById("telefone1").value);
@@ -245,11 +260,11 @@
           localStorage.setItem("estadoDetalhado", document.getElementById("estado").value);
           localStorage.setItem("numeroResidenciaDetalhado", document.getElementById("numeroResidencia").value);
           localStorage.setItem("complementoDetalhado", document.getElementById("complemento").value);
-          localStorage.setItem("idadeDetalhado", document.getElementById("idade").value);
           localStorage.setItem("nomeResponsavel2bDetalhado", document.getElementById("nomeResponsavel2b").value);
+          localStorage.setItem("cpfDetalhado", document.getElementById("cpf").value);
+          localStorage.setItem("rgDetalhado", document.getElementById("rg").value);
           window.location.href = "pagina3.html";
         };
-        // Botão Voltar retorna para index.html
         document.getElementById("voltarPagina2").onclick = function() {
           window.location.href = "index.html";
         };
