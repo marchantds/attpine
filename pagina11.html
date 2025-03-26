@@ -15,30 +15,33 @@
       --table-header-color: #333;
       --text-color: #333;
     }
+    /* Fundo global: imagem fixa cobrindo toda a página */
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
+      width: 100%;
+      min-height: 100%;
       font-family: 'Roboto', sans-serif;
-      background-color: #F9F9F9;
-      background-image: linear-gradient(white, white), linear-gradient(145deg, #FFD700, #6DBF79);
-      background-clip: content-box, border-box;
+      background: url("fundo de pagina.png") no-repeat center center fixed;
+      background-size: cover;
       overflow-x: hidden;
     }
+    /* Wrapper com borda de gradiente que abrange toda a página */
+    .wrapper {
+      width: 100%;
+      min-height: 100vh;
+      box-sizing: border-box;
+      border: 5px solid transparent;
+      border-image: linear-gradient(90deg, #05bddc, #FFD700) 1;
+    }
+    /* Container sem fundo branco, box-shadow ou borda interna */
     .container {
       position: relative;
       min-height: 100vh;
       padding: 20px;
       margin: 20px auto;
       max-width: 1200px;
-      background-color: #ffffff;
-      background-image: url("fundo de pagina.png");
-      background-size: cover;
-      background-position: center;
-      box-shadow: 0 0 15px rgba(255,215,0,0.6);
-      border: 5px solid transparent;
-      border-radius: 15px;
-      border-image: linear-gradient(90deg, #05bddc, #FFD700) 1;
+      background: transparent;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -183,206 +186,210 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Título principal -->
-    <div class="page-header">
-      <h1>Resumo do evento</h1>
-    </div>
-    
-    <!-- 1) Dados Preliminares do Evento -->
-    <div class="section" id="dadosPreliminares">
-      <h4>Dados Preliminares do Evento</h4>
-      <table class="summary-table">
-        <tr>
-          <th>Nome do(a) responsável</th>
-          <td id="nomeResponsavelRes"></td>
-        </tr>
-        <tr>
-          <th>Nome d(a) aniversariante</th>
-          <td id="aniversarianteRes"></td>
-        </tr>
-        <tr>
-          <th>Data de nascimento do(a) aniversariante</th>
-          <td id="dataNascimentoRes"></td>
-        </tr>
-        <tr>
-          <th>Data do Evento</th>
-          <td id="dataEventoRes"></td>
-        </tr>
-        <tr>
-          <th>Horário do evento</th>
-          <td id="horarioEventoRes"></td>
-        </tr>
-      </table>
-      <div class="action-buttons">
-        <button class="btn-editar" id="editarPreliminares">Editar</button>
+  <div class="wrapper">
+    <div class="container">
+      <!-- Título principal -->
+      <div class="page-header">
+        <h1>Resumo do evento</h1>
       </div>
-    </div>
-    
-    <!-- 2) Dados Complementares do Evento -->
-    <div class="section" id="dadosComplementares">
-      <h4>Dados Complementares do Evento</h4>
-      <table class="summary-table">
-        <tr>
-          <th>Nome do Responsável 1</th>
-          <td id="nomeResponsavel1CompRes"></td>
-        </tr>
-        <tr>
-          <th>Telefone do Responsável 1</th>
-          <td id="telefone1CompRes"></td>
-        </tr>
-        <tr>
-          <th>Nome do Responsável 2</th>
-          <td id="nomeResponsavel2CompRes"></td>
-        </tr>
-        <tr>
-          <th>Telefone do Responsável 2</th>
-          <td id="telefone2CompRes"></td>
-        </tr>
-        <tr>
-          <th>E-mail</th>
-          <td id="emailCompRes"></td>
-        </tr>
-        <tr>
-          <th>CEP (somente números)</th>
-          <td id="cepCompRes"></td>
-        </tr>
-        <tr>
-          <th>Logradouro</th>
-          <td id="logradouroCompRes"></td>
-        </tr>
-        <tr>
-          <th>Bairro</th>
-          <td id="bairroCompRes"></td>
-        </tr>
-        <tr>
-          <th>Cidade</th>
-          <td id="cidadeCompRes"></td>
-        </tr>
-        <tr>
-          <th>Estado</th>
-          <td id="estadoCompRes"></td>
-        </tr>
-        <tr>
-          <th>Número da Residência</th>
-          <td id="numeroResidenciaCompRes"></td>
-        </tr>
-        <tr>
-          <th>Complemento</th>
-          <td id="complementoCompRes"></td>
-        </tr>
-        <tr>
-          <th>Idade que o(a) aniversariante completará</th>
-          <td id="idadeCompRes"></td>
-        </tr>
-      </table>
-      <div class="action-buttons">
-        <button class="btn-editar" id="editarComplementares">Editar</button>
-      </div>
-    </div>
-    
-    <!-- 3) Número de Convidados -->
-    <div class="section" id="convidadosSection">
-      <h4>Número de Convidados</h4>
-      <table class="summary-table">
-        <tr>
-          <th>Número de Convidados</th>
-          <td id="numeroConvidadosRes"></td>
-        </tr>
-        <tr>
-          <th>Preço por Pessoa</th>
-          <td id="pricePerPersonRes"></td>
-        </tr>
-        <tr>
-          <th>Total (Convidados)</th>
-          <td id="totalConvidadosRes"></td>
-        </tr>
-      </table>
-      <div id="clausulasRes"></div>
-      <div class="action-buttons">
-        <button class="btn-editar" id="editarConvidados">Editar</button>
-        <button class="btn-remover" id="removerConvidados">Remover</button>
-      </div>
-    </div>
-    
-    <!-- 4) Opções do Cardápio -->
-    <div class="cardapio-section" id="cardapioSection">
-      <h4>Opções do Cardápio</h4>
-      <ul id="cardapioList" class="cardapio-list">
-      </ul>
-      <div class="action-buttons">
-        <button class="btn-editar" id="editarCardapio">Editar</button>
-        <button class="btn-remover" id="removerCardapio">Remover</button>
-      </div>
-    </div>
-    
-    <!-- 5) Empratados -->
-    <div class="section" id="empratadosSection">
-      <h4>Empratados</h4>
-      <table class="summary-table" id="empratadosTable">
-        <tbody>
-        </tbody>
-      </table>
-      <div class="action-buttons">
-        <button class="btn-editar" id="editarEmpratados">Editar</button>
-        <button class="btn-remover" id="removerEmpratados">Remover</button>
-      </div>
-    </div>
-    
-    <!-- 6) Bebidas -->
-    <div class="section" id="bebidasSection">
-      <h4>Bebidas</h4>
-      <table class="summary-table" id="bebidasTable">
-        <thead>
+      
+      <!-- 1) Dados Preliminares do Evento -->
+      <div class="section" id="dadosPreliminares">
+        <h4>Dados Preliminares do Evento</h4>
+        <table class="summary-table">
           <tr>
-            <th>Produto</th>
-            <th>Preço Unitário</th>
-            <th>Quantidade</th>
-            <th>Total</th>
+            <th>Nome do(a) responsável</th>
+            <td id="nomeResponsavelRes"></td>
           </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-      <div class="action-buttons">
-        <button class="btn-editar" id="editarBebidas">Editar</button>
-        <button class="btn-remover" id="removerBebidas">Remover</button>
+          <tr>
+            <th>Nome d(a) aniversariante</th>
+            <td id="aniversarianteRes"></td>
+          </tr>
+          <tr>
+            <th>Data de nascimento do(a) aniversariante</th>
+            <td id="dataNascimentoRes"></td>
+          </tr>
+          <tr>
+            <th>Data do Evento</th>
+            <td id="dataEventoRes"></td>
+          </tr>
+          <tr>
+            <th>Horário do evento</th>
+            <td id="horarioEventoRes"></td>
+          </tr>
+        </table>
+        <div class="action-buttons">
+          <button class="btn-editar" id="editarPreliminares">Editar</button>
+        </div>
       </div>
-    </div>
-    
-    <!-- 7) Decoração -->
-    <div class="section" id="decoracaoSection">
-      <h4>Decoração</h4>
-      <table class="summary-table">
-        <tr>
-          <th>Decoração Selecionada</th>
-          <td id="selectedDecorationRes"></td>
-        </tr>
-        <tr>
-          <th>Preço da Decoração</th>
-          <td id="decorationPriceRes"></td>
-        </tr>
-      </table>
-      <div class="action-buttons">
-        <button class="btn-editar" id="editarDecoracao">Editar</button>
-        <button class="btn-remover" id="removerDecoracao">Remover</button>
+      
+      <!-- 2) Dados Complementares do Evento -->
+      <div class="section" id="dadosComplementares">
+        <h4>Dados Complementares do Evento</h4>
+        <table class="summary-table">
+          <tr>
+            <th>Nome do Responsável 1</th>
+            <td id="nomeResponsavel1CompRes"></td>
+          </tr>
+          <tr>
+            <th>Telefone do Responsável 1</th>
+            <td id="telefone1CompRes"></td>
+          </tr>
+          <tr>
+            <th>CPF</th>
+            <td id="cpfCompRes"></td>
+          </tr>
+          <tr>
+            <th>RG</th>
+            <td id="rgCompRes"></td>
+          </tr>
+          <tr>
+            <th>Nome do Responsável 2</th>
+            <td id="nomeResponsavel2CompRes"></td>
+          </tr>
+          <tr>
+            <th>Telefone do Responsável 2</th>
+            <td id="telefone2CompRes"></td>
+          </tr>
+          <tr>
+            <th>E-mail</th>
+            <td id="emailCompRes"></td>
+          </tr>
+          <tr>
+            <th>CEP (somente números)</th>
+            <td id="cepCompRes"></td>
+          </tr>
+          <tr>
+            <th>Logradouro</th>
+            <td id="logradouroCompRes"></td>
+          </tr>
+          <tr>
+            <th>Bairro</th>
+            <td id="bairroCompRes"></td>
+          </tr>
+          <tr>
+            <th>Cidade</th>
+            <td id="cidadeCompRes"></td>
+          </tr>
+          <tr>
+            <th>Estado</th>
+            <td id="estadoCompRes"></td>
+          </tr>
+          <tr>
+            <th>Número da Residência</th>
+            <td id="numeroResidenciaCompRes"></td>
+          </tr>
+          <tr>
+            <th>Complemento</th>
+            <td id="complementoCompRes"></td>
+          </tr>
+        </table>
+        <div class="action-buttons">
+          <button class="btn-editar" id="editarComplementares">Editar</button>
+        </div>
       </div>
-    </div>
-    
-    <!-- 8) Total do Evento -->
-    <div class="section" id="totalSection">
-      <h4>Total do Evento</h4>
-      <div class="total-display" id="totalEventoRes"></div>
-      <div class="action-buttons"></div>
-    </div>
-    
-    <!-- Botão de Finalizar Pedido -->
-    <div class="nav-buttons">
-      <button type="button" class="btn-custom" id="finalizar">Finalizar Pedido</button>
+      
+      <!-- 3) Número de Convidados -->
+      <div class="section" id="convidadosSection">
+        <h4>Número de Convidados</h4>
+        <table class="summary-table">
+          <tr>
+            <th>Número de Convidados</th>
+            <td id="numeroConvidadosRes"></td>
+          </tr>
+          <tr>
+            <th>Preço por Pessoa</th>
+            <td id="pricePerPersonRes"></td>
+          </tr>
+          <tr>
+            <th>Total (Convidados)</th>
+            <td id="totalConvidadosRes"></td>
+          </tr>
+        </table>
+        <div id="clausulasRes"></div>
+        <div class="action-buttons">
+          <button class="btn-editar" id="editarConvidados">Editar</button>
+          <button class="btn-remover" id="removerConvidados">Remover</button>
+        </div>
+      </div>
+      
+      <!-- 4) Opções do Cardápio -->
+      <div class="cardapio-section" id="cardapioSection">
+        <h4>Opções do Cardápio</h4>
+        <ul id="cardapioList" class="cardapio-list"></ul>
+        <div class="action-buttons">
+          <button class="btn-editar" id="editarCardapio">Editar</button>
+          <button class="btn-remover" id="removerCardapio">Remover</button>
+        </div>
+      </div>
+      
+      <!-- 5) Empratados -->
+      <div class="section" id="empratadosSection">
+        <h4>Empratados</h4>
+        <table class="summary-table" id="empratadosTable">
+          <tbody></tbody>
+        </table>
+        <div class="action-buttons">
+          <button class="btn-editar" id="editarEmpratados">Editar</button>
+          <button class="btn-remover" id="removerEmpratados">Remover</button>
+        </div>
+      </div>
+      
+      <!-- 6) Bebidas -->
+      <div class="section" id="bebidasSection">
+        <h4>Bebidas</h4>
+        <table class="summary-table" id="bebidasTable">
+          <thead>
+            <tr>
+              <th>Produto</th>
+              <th>Preço Unitário</th>
+              <th>Quantidade</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div class="action-buttons">
+          <button class="btn-editar" id="editarBebidas">Editar</button>
+          <button class="btn-remover" id="removerBebidas">Remover</button>
+        </div>
+      </div>
+      
+      <!-- 7) Decoração -->
+      <div class="section" id="decoracaoSection">
+        <h4>Decoração</h4>
+        <table class="summary-table">
+          <tr>
+            <th>Decoração Selecionada</th>
+            <td id="selectedDecorationRes"></td>
+          </tr>
+          <tr>
+            <th>Preço da Decoração</th>
+            <td id="decorationPriceRes"></td>
+          </tr>
+        </table>
+        <div class="action-buttons">
+          <button class="btn-editar" id="editarDecoracao">Editar</button>
+          <button class="btn-remover" id="removerDecoracao">Remover</button>
+        </div>
+      </div>
+      
+      <!-- 8) Total do Evento -->
+      <div class="section" id="totalSection">
+        <h4>Total do Evento</h4>
+        <div class="total-display" id="totalEventoRes"></div>
+        <div class="action-buttons"></div>
+      </div>
+      
+      <!-- Botão de Finalizar Pedido -->
+      <div class="nav-buttons">
+        <button type="button" class="btn-custom" id="finalizar">Finalizar Pedido</button>
+      </div>
     </div>
   </div>
   
   <script>
+    // Função para formatar valores em moeda brasileira
     function formatCurrency(value) {
       return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
     }
@@ -392,6 +399,29 @@
       return parseFloat(numeric) || 0;
     }
     
+    // Atualiza o investimento dos empratados com a nova lógica
+    function updateInvestmentEmpratados() {
+      const numeroConvidados = localStorage.getItem('numeroConvidados') || "0";
+      const selectedEmpratados = JSON.parse(localStorage.getItem('selectedEmpratados') || "[]");
+      if (selectedEmpratados.length > 0) {
+        const numConvidadosInt = parseInt(numeroConvidados) || 0;
+        let investimentoValue = 0;
+        if (numConvidadosInt > 0) {
+          if (numConvidadosInt <= 25) {
+            investimentoValue = 575.00;
+          } else if (numConvidadosInt <= 40) {
+            investimentoValue = 800.00;
+          } else {
+            investimentoValue = 1050.00;
+          }
+        }
+        localStorage.setItem("investimentoEmpratados", investimentoValue.toFixed(2));
+      } else {
+        localStorage.removeItem("investimentoEmpratados");
+      }
+    }
+    
+    // Atualiza o total do evento
     function updateTotalEvento() {
       const totalConvidadosText = document.getElementById("totalConvidadosRes").innerText;
       const totalConvidados = parseCurrency(totalConvidadosText);
@@ -417,6 +447,7 @@
       localStorage.setItem("totalEvento", novoTotal.toFixed(2));
     }
     
+    // Recupera os dados armazenados
     const nomeResponsavel = localStorage.getItem('nomeResponsavel') || "";
     const aniversariante = localStorage.getItem('aniversariante') || "";
     const dataNascimento = localStorage.getItem('dataNascimento') || "";
@@ -433,9 +464,12 @@
     const estadoDetalhado = localStorage.getItem('estadoDetalhado') || "";
     const numeroResidenciaDetalhado = localStorage.getItem('numeroResidenciaDetalhado') || "";
     const complementoDetalhado = localStorage.getItem('complementoDetalhado') || "";
-    const idadeDetalhado = localStorage.getItem('idadeDetalhado') || "";
     
     const nomeResponsavel2bDetalhado = localStorage.getItem('nomeResponsavel2bDetalhado') || "";
+    
+    // Novos campos CPF e RG
+    const cpfDetalhado = localStorage.getItem('cpfDetalhado') || "";
+    const rgDetalhado = localStorage.getItem('rgDetalhado') || "";
     
     const numeroConvidados = localStorage.getItem('numeroConvidados') || "";
     const pricePerPerson = localStorage.getItem('pricePerPerson') || "";
@@ -444,10 +478,10 @@
     
     const selectedBeverages = JSON.parse(localStorage.getItem('selectedBeverages') || "[]");
     const selectedEmpratados = JSON.parse(localStorage.getItem('selectedEmpratados') || "[]");
-    const selectedDecoration = localStorage.getItem('selectedDecoration') || "";
-    const decorationPrice = parseFloat(localStorage.getItem('decorationPriceAdded') || "0");
     const selectedOptions = JSON.parse(localStorage.getItem('selectedOptions') || "[]");
     
+    // Atualiza o investimento dos empratados
+    updateInvestmentEmpratados();
     const investimentoEmpratados = parseFloat(localStorage.getItem("investimentoEmpratados")) || 0;
     
     const cameFrom = localStorage.getItem("cameFrom") || "";
@@ -460,6 +494,7 @@
       totalCart = parseFloat(localStorage.getItem("totalEvento")) || 0;
     }
     
+    // Atualiza os elementos da página com os dados armazenados
     document.getElementById("nomeResponsavelRes").innerText = nomeResponsavel;
     document.getElementById("aniversarianteRes").innerText = aniversariante;
     document.getElementById("dataNascimentoRes").innerText = dataNascimento;
@@ -468,6 +503,8 @@
     
     document.getElementById("nomeResponsavel1CompRes").innerText = nomeResponsavel;
     document.getElementById("telefone1CompRes").innerText = telefone1Detalhado;
+    document.getElementById("cpfCompRes").innerText = cpfDetalhado;
+    document.getElementById("rgCompRes").innerText = rgDetalhado;
     document.getElementById("nomeResponsavel2CompRes").innerText = nomeResponsavel2bDetalhado;
     document.getElementById("telefone2CompRes").innerText = telefone2Detalhado;
     document.getElementById("emailCompRes").innerText = emailDetalhado;
@@ -478,13 +515,13 @@
     document.getElementById("estadoCompRes").innerText = estadoDetalhado;
     document.getElementById("numeroResidenciaCompRes").innerText = numeroResidenciaDetalhado;
     document.getElementById("complementoCompRes").innerText = complementoDetalhado;
-    document.getElementById("idadeCompRes").innerText = idadeDetalhado;
     
     document.getElementById("numeroConvidadosRes").innerText = numeroConvidados;
     document.getElementById("pricePerPersonRes").innerText = formatCurrency(pricePerPerson);
     document.getElementById("totalConvidadosRes").innerText = formatCurrency(totalConvidadosStored);
     document.getElementById("clausulasRes").innerHTML = clausulasText;
     
+    // Renderiza a tabela de bebidas
     const bebidasTableBody = document.querySelector("#bebidasTable tbody");
     selectedBeverages.forEach((item) => {
       const tr = document.createElement("tr");
@@ -497,7 +534,9 @@
       bebidasTableBody.appendChild(tr);
     });
     
+    // Renderiza a tabela de empratados
     const empratadosTableBody = document.getElementById("empratadosTable").querySelector("tbody");
+    empratadosTableBody.innerHTML = "";
     if (selectedEmpratados.length > 0) {
       selectedEmpratados.forEach(item => {
         const tr = document.createElement("tr");
@@ -506,7 +545,7 @@
       });
     } else {
       const tr = document.createElement("tr");
-      tr.innerHTML = `<td colspan="2">Nenhum empratado selecionado</td>`;
+      tr.innerHTML = `<td colspan='2'>Nenhum empratado selecionado</td>`;
       empratadosTableBody.appendChild(tr);
     }
     if (investimentoEmpratados > 0) {
@@ -515,9 +554,20 @@
       empratadosTableBody.appendChild(trInvestimento);
     }
     
-    document.getElementById("selectedDecorationRes").innerText = selectedDecoration;
-    document.getElementById("decorationPriceRes").innerText = formatCurrency(decorationPrice);
+    // Atualiza a seção de Decoração
+    const selectedDecoration = localStorage.getItem('selectedDecoration') || "";
+    const decorationPrice = parseFloat(localStorage.getItem('decorationPriceAdded') || "0");
+    const selectedBalloon = localStorage.getItem('selectedBalloon') || "";
+    const balloonPrice = parseFloat(localStorage.getItem('balloonPriceAdded') || "0");
     
+    let decorSummary = selectedDecoration;
+    if (selectedBalloon) {
+      decorSummary += "<br><small>Balões: " + selectedBalloon + "</small>";
+    }
+    document.getElementById("selectedDecorationRes").innerHTML = decorSummary;
+    document.getElementById("decorationPriceRes").innerText = formatCurrency(decorationPrice + balloonPrice);
+    
+    // Renderiza a lista de opções do Cardápio
     const cardapioList = document.getElementById("cardapioList");
     if (selectedOptions.length > 0) {
       selectedOptions.forEach(option => {
@@ -533,8 +583,9 @@
     
     updateTotalEvento();
     
+    // Eventos de navegação e edição
     document.getElementById("finalizar").addEventListener("click", function() {
-      window.location.href = "confirmacao.html";
+      window.location.href = "contrato.html";
     });
     
     document.getElementById("editarPreliminares").addEventListener("click", function() {
@@ -542,7 +593,6 @@
       window.location.href = "index.html";
     });
     document.getElementById("editarComplementares").addEventListener("click", function() {
-      console.log("Editar Complementares clicado");
       localStorage.setItem("edit_complementares", "true");
       window.location.href = "pagina2.html";
     });
@@ -601,6 +651,8 @@
     document.getElementById("removerDecoracao").addEventListener("click", function() {
       localStorage.removeItem("selectedDecoration");
       localStorage.removeItem("decorationPriceAdded");
+      localStorage.removeItem("selectedBalloon");
+      localStorage.removeItem("balloonPriceAdded");
       document.getElementById("selectedDecorationRes").innerText = "";
       document.getElementById("decorationPriceRes").innerText = "";
       updateTotalEvento();
