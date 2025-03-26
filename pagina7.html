@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
@@ -6,39 +6,42 @@
   <title>Pine Tree Farm - Bebidas Alcoólicas</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
   <style>
+    /* O body exibe a imagem de fundo que cobre toda a página */
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
+      width: 100%;
+      min-height: 100%;
       font-family: 'Roboto', sans-serif;
-      background-color: #F9F9F9;
-      background: rgba(106,190,155,0.1);
-      background-image: linear-gradient(white, white), linear-gradient(145deg, #FFD700, #6DBF79);
-      background-origin: border-box;
-      background-clip: content-box, border-box;
+      background: url("fundo de pagina.png") no-repeat center center fixed;
+      background-size: cover;
       overflow-x: hidden;
     }
+    /* Wrapper: envolve todo o conteúdo e aplica a borda com gradiente */
+    .wrapper {
+      width: 100%;
+      min-height: 100vh;
+      box-sizing: border-box;
+      border: 5px solid transparent;
+      border-image: linear-gradient(90deg, #05bddc, #FFD700) 1;
+    }
+    /* Container: centraliza o conteúdo; fundo transparente para que fique visível a imagem de fundo do body */
     .container {
       position: relative;
-      min-height: 100vh;
-      padding: 20px;
       margin: 20px auto;
+      padding: 20px;
       max-width: 1200px;
-      background-color: #fff;
-      background-image: url("fundo de pagina.png");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      box-shadow: 0 0 15px rgba(255,215,0,0.6);
-      border: 5px solid transparent;
       border-radius: 15px;
-      border-image: linear-gradient(90deg, #05bddc, #FFD700) 1;
+      background: transparent;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
     }
-    .title-wrapper { text-align: center; }
+    /* Título */
+    .title-wrapper {
+      text-align: center;
+      width: 100%;
+    }
     .page-title {
       display: inline-block;
       font-size: 2.5rem;
@@ -49,6 +52,47 @@
       border-radius: 30px;
       margin: 80px auto 20px;
       text-shadow: 2px 2px 3px rgba(0,0,0,0.2);
+    }
+    /* Carrinho */
+    #cartContainer {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: #FFD700;
+      color: #000;
+      padding: 10px 15px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #cartContainer span {
+      margin-left: 5px;
+    }
+    /* Mensagem de opções */
+    #allowedMessage {
+      display: inline-block;
+      text-align: center;
+      font-size: 1.2rem;
+      color: #856404;
+      background-color: #FFF3CD;
+      padding: 10px;
+      border-radius: 8px;
+      border: 2px solid #FFEEBA;
+      margin-bottom: 20px;
+      margin-top: 20px;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin: 30px 0 20px;
+      background-color: #00692e;
+      color: #fff;
+      padding: 10px;
+      border-radius: 8px;
     }
     .form-container {
       width: 100%;
@@ -74,6 +118,7 @@
       color: #00692e;
       margin: 40px 0;
     }
+    /* Botões customizados para SIM e NÃO */
     .btn-custom-sim, .btn-custom-nao {
       border: none;
       padding: 12px 25px;
@@ -99,6 +144,7 @@
       background: linear-gradient(90deg, #c9302c, #d9534f);
       box-shadow: 0 5px 10px rgba(0,0,0,0.2);
     }
+    /* Botões de navegação */
     .nav-buttons {
       width: 100%;
       display: flex;
@@ -115,89 +161,69 @@
       color: white;
       cursor: pointer;
       transition: background 0.3s ease, box-shadow 0.3s ease;
-      margin: 10px;
+      margin: 20px auto 0;
+      display: block;
       width: 120px;
     }
     .btn-custom:hover {
       background: linear-gradient(90deg, #00692e, #05bddc);
       box-shadow: 0 5px 10px rgba(0,0,0,0.2);
     }
-    #cartContainer {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background-color: #FFD700;
-      color: #000;
-      padding: 10px 15px;
-      border-radius: 50%;
-      font-size: 1.2rem;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    #cartContainer span { margin-left: 5px; }
     @media (max-width:768px) {
-      #cartContainer { top: 10px; right: 10px; font-size: 1rem; }
+      #cartContainer {
+        top: 10px;
+        right: 10px;
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Carrinho -->
-    <div id="cartContainer">
-      🛒 <span id="cartValue"></span>
-    </div>
-    <div class="title-wrapper">
-      <div class="page-title">Bebidas Alcoólicas</div>
-    </div>
-    <div class="form-container">
-      <h3>Bebidas Alcoólicas</h3>
-      <div class="question">Deseja incluir bebida alcoólica?</div>
-      <div>
-        <button type="button" class="btn-custom-sim" id="btnSim">SIM</button>
-        <button type="button" class="btn-custom-nao" id="btnNao">NÃO</button>
+  <div class="wrapper">
+    <div class="container">
+      <!-- Carrinho -->
+      <div id="cartContainer">
+        🛒 <span id="cartValue"></span>
       </div>
-    </div>
-    <!-- Botão de navegação "Voltar" -->
-    <div class="nav-buttons">
-      <button type="button" class="btn-custom" id="voltarPage7">Voltar</button>
+      <!-- Título da página -->
+      <div class="title-wrapper">
+        <div class="page-title">Bebidas Alcoólicas</div>
+      </div>
+      <div class="form-container">
+        <h3>Bebidas Alcoólicas</h3>
+        <div class="question">Deseja incluir bebida alcoólica?</div>
+        <div>
+          <button type="button" class="btn-custom-sim" id="btnSim">SIM</button>
+          <button type="button" class="btn-custom-nao" id="btnNao">NÃO</button>
+        </div>
+      </div>
+      <!-- Botão de navegação "Voltar" -->
+      <div class="nav-buttons">
+        <button type="button" class="btn-custom" id="voltarPage7">Voltar</button>
+      </div>
     </div>
   </div>
   
   <script>
-    // Ao carregar a Página 7, impede que o carrinho seja atualizado com valores de outras páginas.
-    // Se existir um valor original salvo (originalTotalEvento), ele é restaurado.
+    // Função para formatar valores para o padrão brasileiro
+    function formatCurrency(value) {
+      return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
+    }
+    
+    // Atualiza o carrinho conforme o valor da compra
     var cameFrom = localStorage.getItem("cameFrom");
     if (cameFrom === "6") {
       var investimentoEmpratados = parseFloat(localStorage.getItem("investimentoEmpratados")) || 0;
       var totalEventoCart = parseFloat(localStorage.getItem("totalEventoCart")) || 0;
       var somaTotal = investimentoEmpratados + totalEventoCart;
-      document.getElementById("cartValue").innerText = "Valor total da compra: " + formatCurrency(somaTotal);
-      }   else {
+      document.getElementById("cartValue").innerText = "Valor parcial do evento: " + formatCurrency(somaTotal);
+      localStorage.setItem("totalCompra", somaTotal.toFixed(2));
+    } else {
       var totalEventoCart = parseFloat(localStorage.getItem("totalEventoCart")) || 0;
       document.getElementById("cartValue").innerText = "Valor total da compra: " + formatCurrency(totalEventoCart);
+      localStorage.setItem("totalCompra", totalEventoCart.toFixed(2));
     }
     
-    // Função para formatar valores no padrão brasileiro
-    function formatCurrency(value) {
-      return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
-    }
-    
-    // Lê o valor atual de "totalEvento" do localStorage (já restaurado, se necessário)
-    var cameFrom = localStorage.getItem("cameFrom");
-if (cameFrom === "6") {
-  var investimentoEmpratados = parseFloat(localStorage.getItem("investimentoEmpratados")) || 0;
-  var totalEventoCart = parseFloat(localStorage.getItem("totalEventoCart")) || 0;
-  var somaTotal = investimentoEmpratados + totalEventoCart;
-  document.getElementById("cartValue").innerText = "Valor total da compra: " + formatCurrency(somaTotal);
-  // Armazena o valor calculado para que outras páginas possam acessá-lo
-  localStorage.setItem("totalCompra", somaTotal.toFixed(2));
-} else {
-  var totalEventoCart = parseFloat(localStorage.getItem("totalEventoCart")) || 0;
-  document.getElementById("cartValue").innerText = "Valor total da compra: " + formatCurrency(totalEventoCart);
-  localStorage.setItem("totalCompra", totalEventoCart.toFixed(2));
-  }
     // Botão SIM: define cameFrom = "8" e direciona para Página 8
     document.getElementById("btnSim").addEventListener("click", function(){
       localStorage.setItem("cameFrom", "8");
@@ -209,11 +235,7 @@ if (cameFrom === "6") {
       window.location.href = "pagina9.html";
     });
     
-    // Botão Voltar: verifica a origem para definir a página de retorno:
-    // Se o usuário veio pelo caminho SIM (definido em Página 5 como "6"), retorna para Página 6;
-    // Caso contrário, retorna para Página 5.
-    var cameFrom = localStorage.getItem("cameFrom");
-    console.log("cameFrom:", cameFrom);
+    // Botão Voltar: redireciona conforme a origem
     var voltarBtn = document.getElementById("voltarPage7");
     if (cameFrom === "6") {
       voltarBtn.addEventListener("click", function(){
