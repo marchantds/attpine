@@ -3,21 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pine Tree Farm - Adicionar Empratados</title>
+  <title>Pine Tree Farm - Adicionar empratados</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
   <style>
+    /* html e body ocupam toda a página com fundo definido */
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
+      width: 100%;
+      min-height: 100%;
       font-family: 'Roboto', sans-serif;
-      background-color: #F9F9F9;
-      background: rgba(106, 190, 155, 0.1);
-      background-image: linear-gradient(white, white), linear-gradient(145deg, #FFD700, #6DBF79);
-      background-origin: border-box;
-      background-clip: content-box, border-box;
+      background: url("fundo de pagina.png") no-repeat center center fixed;
+      background-size: cover;
       overflow-x: hidden;
     }
+    /* Wrapper que envolve todo o conteúdo e exibe a borda com gradiente */
+    .wrapper {
+      width: 100%;
+      min-height: 100vh;
+      box-sizing: border-box;
+      border: 5px solid transparent;
+      border-image: linear-gradient(90deg, #05bddc, #FFD700) 1;
+    }
+    /* Container para centralizar o conteúdo; fundo transparente para exibir o fundo do body */
     .container {
       position: relative;
       min-height: 100vh;
@@ -26,14 +34,7 @@
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      background-image: url("fundo de pagina.png");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      box-shadow: 0 0 15px rgba(255,215,0,0.6);
-      border: 5px solid transparent;
-      border-radius: 15px;
-      border-image: linear-gradient(90deg, #05bddc, #FFD700) 1;
+      background: transparent;
     }
     .form-container {
       width: 100%;
@@ -122,30 +123,32 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Carrinho: exibe o valor total da compra -->
-    <div id="cartContainer">
-      🛒 <span id="cartValue"></span>
-    </div>
-    <div class="form-container">
-      <h3>Adicionar Empratados</h3>
-      <div class="question">Deseja adicionar empratados à sua festa?</div>
-      <!-- Botões "SIM" e "NÃO" -->
-      <div>
-        <button type="button" class="btn-custom" id="btnSim">SIM</button>
-        <button type="button" class="btn-custom" id="btnNao">NÃO</button>
+  <div class="wrapper">
+    <div class="container">
+      <!-- Carrinho: exibe o valor total da compra -->
+      <div id="cartContainer">
+        🛒 <span id="cartValue"></span>
       </div>
-      <!-- Tela de atenção com informações de INVESTIMENTO -->
-      <div id="atencao">
-        <p><strong>INVESTIMENTO</strong></p>
-        <p>* Festas de 25 pessoas: R$ 575,00</p>
-        <p>* Festas de 25 até 40 pessoas: R$ 800,00</p>
-        <p>* Festas de 40 até 60 pessoas: R$ 1050,00</p>
+      <div class="form-container">
+        <h3>Adicionar Empratados</h3>
+        <div class="question">Deseja adicionar empratados à sua festa?</div>
+        <!-- Botões "SIM" e "NÃO" -->
+        <div>
+          <button type="button" class="btn-custom" id="btnSim">SIM</button>
+          <button type="button" class="btn-custom" id="btnNao">NÃO</button>
+        </div>
+        <!-- Tela de atenção com informações de INVESTIMENTO -->
+        <div id="atencao">
+          <p><strong>INVESTIMENTO</strong></p>
+          <p>* Festas de 25 pessoas: R$ 575,00</p>
+          <p>* Festas de 25 até 40 pessoas: R$ 800,00</p>
+          <p>* Festas de 40 até 60 pessoas: R$ 1050,00</p>
+        </div>
       </div>
-    </div>
-    <!-- Container de botões de navegação: somente o botão "Voltar" -->
-    <div class="nav-buttons">
-      <button type="button" class="btn-custom" id="voltarPagina5">Voltar</button>
+      <!-- Container de botões de navegação: somente o botão "Voltar" -->
+      <div class="nav-buttons">
+        <button type="button" class="btn-custom" id="voltarPagina5">Voltar</button>
+      </div>
     </div>
   </div>
 
@@ -157,8 +160,7 @@
     
     // Atualiza o carrinho com o total atual
     var totalEventoCart = parseFloat(localStorage.getItem("totalEventoCart")) || 0;
-    document.getElementById("cartValue").innerText = "Valor total da compra: " + formatCurrency(totalEventoCart);
-
+    document.getElementById("cartValue").innerText = "Valor parcial do evento: " + formatCurrency(totalEventoCart);
 
     // Botão "SIM": Calcula o investimento e atualiza as chaves
     document.getElementById("btnSim").addEventListener("click", function(){
