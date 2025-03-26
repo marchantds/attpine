@@ -6,32 +6,33 @@
   <title>Pine Tree Farm - Cardápio</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
   <style>
-    body {
-      font-family: 'Roboto', sans-serif;
+    /* Body: exibe a imagem de fundo que cobre toda a página */
+    html, body {
       margin: 0;
       padding: 0;
-      background-color: #F9F9F9;
-      background-image: linear-gradient(white, white), linear-gradient(145deg, #FFD700, #6DBF79);
-      background-origin: border-box;
-      background-clip: content-box, border-box;
-      min-height: 100vh;
-      box-sizing: border-box;
+      width: 100%;
+      min-height: 100%;
+      font-family: 'Roboto', sans-serif;
+      background: url("fundo de pagina.png") no-repeat center center fixed;
+      background-size: cover;
       overflow-x: hidden;
     }
+    /* Wrapper: envolve todo o conteúdo e aplica a borda com gradiente */
+    .wrapper {
+      width: 100%;
+      min-height: 100vh;
+      box-sizing: border-box;
+      border: 5px solid transparent;
+      border-image: linear-gradient(90deg, #05bddc, #FFD700) 1;
+    }
+    /* Container: centraliza o conteúdo e utiliza fundo transparente para que o fundo do body seja visível */
     .container {
       position: relative;
       margin: 20px auto;
       padding: 20px;
       max-width: 1200px;
-      border: 5px solid transparent;
       border-radius: 15px;
-      background-color: #fff;
-      background-image: url("fundo de pagina.png");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      box-shadow: 0 0 15px rgba(255,215,0,0.6);
-      border-image: linear-gradient(90deg, #05bddc, #FFD700) 1;
+      background: transparent; /* fundo transparente */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -169,289 +170,320 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Carrinho -->
-    <div id="cartContainer">
-      🛒 <span id="cartValue"></span>
-    </div>
-    <!-- Título com estilo similar à Página 7 -->
-    <div class="title-wrapper">
-      <div class="page-title">Cardápio</div>
-    </div>
-    <div id="allowedMessage"></div>
-    <div class="row">
-      <!-- Seção 1: Sanduíches e Quitutes -->
-      <div class="col-12">
-        <h4 class="section-title">Sanduíches e Quitutes</h4>
+  <div class="wrapper">
+    <div class="container">
+      <!-- Carrinho -->
+      <div id="cartContainer">
+        🛒 <span id="cartValue"></span>
       </div>
-      <!-- Itens do cardápio -->
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+      <!-- Título -->
+      <div class="title-wrapper">
+        <div class="page-title">Cardápio</div>
+      </div>
+      <div id="allowedMessage"></div>
+      <div class="row">
+        <!-- Seção 1: Sanduíches e Quitutes -->
+        <div class="col-12">
+          <h4 class="section-title">Sanduíches e Quitutes</h4>
         </div>
-        <div class="product-name">Mini Burger cheddar e salada</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <!-- Itens da Seção 1 -->
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Mini burger cheddar e salada.jpg" alt="Mini burger cheddar e salada">
+          </div>
+          <div class="product-name">Mini burger cheddar e salada</div>
         </div>
-        <div class="product-name">Mini burger muçarela e tomate italiano</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Mini sanduíche sírio com peito de peru, queijo e salada fria.jpg" alt="Mini sanduíche sírio com peito de peru, queijo e salada fria">
+          </div>
+          <div class="product-name">Mini sanduíche sírio com peito de peru, queijo e salada fria</div>
         </div>
-        <div class="product-name">Minis sanduíche peito de peru, queijo, e salada fria</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <input type="file" accept="image/*" disabled>
+            <span>Upload</span>
+          </div>
+          <div class="product-name">Mini brioche recheado com lombo, creme de ricota e rúcula</div>
         </div>
-        <div class="product-name">Mini brioche recheado com lombo, creme de ricota e rúcula</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Cachorro-quente (com batata palha e milho verde).jpg" alt="Cachorro-quente (com batata palha e milho verde)">
+          </div>
+          <div class="product-name">Cachorro quente (com batata palha e milho verde)</div>
         </div>
-        <div class="product-name">Pão de queijo recheado com pernil</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Gelatinas diversas.jpg" alt="Gelatinas diversas">
+          </div>
+          <div class="product-name">Gelatinas diversas</div>
         </div>
-        <div class="product-name">Mini wrpas de frango com cream chesse e rúcula</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Pipoca salgada.jpg" alt="Pipoca salgada">
+          </div>
+          <div class="product-name">Pipoca salgada</div>
         </div>
-        <div class="product-name">Empadinha de frango com azeitona</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Frutas da estação (opções disponíveis conforme a safra).jpg" alt="Frutas da estação (opções disponíveis conforme a safra)">
+          </div>
+          <div class="product-name">Frutas da estação (opções disponíveis conforme a safra)</div>
         </div>
-        <div class="product-name">Empadinha de palmito</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Mini burger muçarela e tomate italiano.jpg" alt="Mini burger muçarela e tomate italiano">
+          </div>
+          <div class="product-name">Mini burger muçarela e tomate italiano</div>
         </div>
-        <div class="product-name">Mini quiche Lorraine</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+
+        <!-- Seção 2: Salgados Assados e Fritos -->
+        <div class="col-12">
+          <h4 class="section-title">Salgados Assados e Fritos</h4>
         </div>
-        <div class="product-name">Pão da vovó</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <!-- Sub-seção: Fritos -->
+        <div class="col-12">
+          <h5 class="section-title" style="font-size:1.5rem; margin:10px 0; background-color:#00692e;">Fritos</h5>
         </div>
-        <div class="product-name">Pão pizza</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <!-- Itens Fritos -->
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Dadinho de tapioca com geleia de pimenta.jpg" alt="Dadinho de tapioca com geleia de pimenta">
+          </div>
+          <div class="product-name">Dadinho de tapioca com geleia de pimenta</div>
         </div>
-        <div class="product-name">Enroladinho de salsicha</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Coxinha de bacon.jpg" alt="Coxinha de bacon">
+          </div>
+          <div class="product-name">Coxinha de bacon</div>
         </div>
-        <div class="product-name">Esfira de carne</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Chocoxinha.jpg" alt="Chocoxinha">
+          </div>
+          <div class="product-name">Chocoxinha</div>
         </div>
-        <div class="product-name">Esfira de frango</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Bolinho de queijo.jpg" alt="Bolinho de queijo">
+          </div>
+          <div class="product-name">Bolinho de queijo</div>
         </div>
-        <div class="product-name">Pastel de carne (assado)</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Churros com doce de leite.jpg" alt="Churros com doce de leite">
+          </div>
+          <div class="product-name">Churros com doce de leite</div>
         </div>
-        <div class="product-name">Pastel de frango (assado)</div>
-      </div>
-      
-      <!-- Seção 2: Salgados assados e fritos -->
-      <div class="col-12">
-        <h4 class="section-title">Salgados assados e fritos</h4>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+              <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Risole de milho.jpg" alt="Risole de milho.jpg">
+            </div>
+          <div class="product-name">Risole de milho</div>
         </div>
-        <div class="product-name">Dadinho de tapioca com geleia de pimenta</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Risole de camarão.jpg" alt="Risole de camarão">
+          </div>
+          <div class="product-name">Risole de camarão</div>
         </div>
-        <div class="product-name">Coxinha de frango catupiry</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Quibe de queijo.jpg" alt="Quibe de queijo">
+          </div>
+          <div class="product-name">Quibe de queijo</div>
         </div>
-        <div class="product-name">Bolinho de queijo</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Napolitano (presunto e queijo).jpg" alt="Napolitano (presunto e queijo)">
+          </div>
+          <div class="product-name">Napolitano (presunto e queijo)</div>
         </div>
-        <div class="product-name">Churros com doce de leite</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Coxinha de frango com catupiry.jpg" alt="Coxinha de frango com catupiry">
+          </div>
+          <div class="product-name">Coxinha de frango com catupiry</div>
         </div>
-        <div class="product-name">Rissoles de milho</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <input type="file" accept="image/*" disabled>
+            <span>Upload</span>
+          </div>
+          <div class="product-name">Carne de sol com mandioca</div>
         </div>
-        <div class="product-name">Quibe de queijo</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Coxinha sem catupiry.jpg" alt="Coxinha sem catupiry">
+          </div>
+          <div class="product-name">Coxinha sem catupiry</div>
         </div>
-        <div class="product-name">Pastel de carne</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <input type="file" accept="image/*" disabled>
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Batata frita.jpg" alt="Batata frita">
+          </div>
+          <div class="product-name">Batata frita</div>
         </div>
-        <div class="product-name">Pastel de queijo com orégano</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Pastel de carne (frito).jpg" alt="Pastel de carne (frito)">
+          </div> 
+          <div class="product-name">Pastel de carne (frito)</div>
         </div>
-        <div class="product-name">Batata frita</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Pastel de queijo com orégano (frito).jpg" alt="Pastel de queijo com orégano (frito)">
+          </div> 
+          <div class="product-name">Pastel de queijo com orégano (frito)</div>
         </div>
-        <div class="product-name">Mini pizza calabresa</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+
+        <!-- Sub-seção: Assados -->
+        <div class="col-12">
+          <h5 class="section-title" style="font-size:1.5rem; margin:10px 0; background-color:#00692e;">Assados</h5>
         </div>
-        <div class="product-name">Mini pizza queijo com orégano</div>
-      </div>
-      
-      <!-- Seção 3: Opções vegetarianas -->
-      <div class="col-12">
-        <h4 class="section-title">Opções vegetarianas</h4>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <!-- Itens Assados -->
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Pão de queijo recheado com goiabada (solicitar com 5 dias de antecedência).jpg" alt="Pão de queijo recheado com goiabada (solicitar com 5 dias de antecedência)">
+          </div> 
+          <div class="product-name">Pão de queijo recheado com goiabada (solicitar com 5 dias de antecedência)</div>
         </div>
-        <div class="product-name">Pizza marguerita</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Pão de queijo recheado com frango (solicitar com 5 dias de antecedência).jpg" alt="Pão de queijo recheado com frango (solicitar com 5 dias de antecedência)">
+          </div>
+          <div class="product-name">Pão de queijo recheado com frango (solicitar com 5 dias de antecedência)</div>
         </div>
-        <div class="product-name">mine Quiche alho poró</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Mini wraps de frango, cream cheese e salada.jpg" alt="Mini wraps de frango, cream cheese e salada">
+          </div>
+          <div class="product-name">Mini wraps de frango, cream cheese e salada</div>
         </div>
-        <div class="product-name">Mini sanduíche de pão sírio com Mini burguer de grão de bico</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+          <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Empadinha de frango com azeitona.jpg" alt="Empadinha de frango com azeitona">
+          </div>
+          <div class="product-name">Empadinha de frango com azeitona</div>
         </div>
-        <div class="product-name">Milho cozido</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Empadinha de palmito.jpg" alt="Empadinha de palmito">
+          </div>
+          <div class="product-name">Empadinha de palmito</div>
         </div>
-        <div class="product-name">Pipoca</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Mini quiche lorraine.jpg" alt="Mini quiche lorraine">
+          </div>
+          <div class="product-name">Mini quiche lorraine</div>
         </div>
-        <div class="product-name">Pão de queijo</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Mini quiche de alho-poró.jpg" alt="quiche de alho-poró">
+          </div>
+          <div class="product-name">Mini quiche de alho poró</div>
         </div>
-        <div class="product-name">Enroladinho de queijo</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <input type="file" accept="image/*" disabled>
+            <span>Upload</span>
+          </div>
+          <div class="product-name">Pão da vovó</div>
         </div>
-        <div class="product-name">Dadinho de tapioca</div>
-      </div>
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Pão pizza.jpg" alt="Pão pizza">
+          </div>
+          <div class="product-name">Pão pizza</div>
         </div>
-        <div class="product-name">Churros</div>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Enroladinho de salsicha.jpg" alt="Enroladinho de salsicha">
+          </div>
+          <div class="product-name">Enroladinho de salsicha</div>
+        </div>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Esfiha de frango.jpg" alt="Esfiha de frango">
+          </div>
+          <div class="product-name">Esfiha de frango</div>
+        </div>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Pastel de frango(assado).jpg" alt="Pastel de frango(assado)">
+          </div>
+          <div class="product-name">Pastel de frango (assado)</div>
+        </div>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <input type="file" accept="image/*" disabled>
+            <span>Upload</span>
+          </div>
+          <div class="product-name">Pão recheado com calabresa</div>
+        </div>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Folhado de maçã com canela.jpg" alt="Folhado de maçã com canela">
+          </div>
+          <div class="product-name">Folhado de maçã com canela</div>
+        </div>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Pastel de carne (assado).jpg" alt="Pastel de carne (assado)">
+          </div>
+          <div class="product-name">Pastel de carne (assado)</div>
+        </div>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Esfiha de carne.jpg" alt="Esfiha de carne">
+          </div>
+          <div class="product-name">Esfiha de carne</div>
+        </div>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Enroladinho de queijo.jpg" alt="Enroladinho de queijo">
+          </div>
+          <div class="product-name">Enroladinho de queijo</div>
+        </div>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Pão de queijo.jpg" alt="Pão de queijo">
+          </div>
+          <div class="product-name">Pão de queijo tradicional</div>
+        </div>
+
+        <!-- Seção 3: Mini Pizzas -->
+        <div class="col-12">
+          <h4 class="section-title">Mini Pizzas</h4>
+        </div>
+        <!-- Itens da Seção 3 -->
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Mini pizza calabresa.jpg" alt="Mini pizza calabresa">
+          </div>
+          <div class="product-name">Mini pizza calabresa</div>
+        </div>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Mini pizza marguerita.jpg" alt="Mini pizza marguerita">
+          </div>
+          <div class="product-name">Mini pizza marguerita</div>
+        </div>
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Mini pizza queijo com orégano.jpg" alt="Mini pizza queijo com orégano">
+          </div>
+          <div class="product-name">Mini pizza de queijo com orégano</div>
+        </div>
       </div>
-    </div>
-    <!-- Botões de navegação -->
-    <div class="nav-buttons">
-      <button type="button" class="btn-custom" id="voltarPagina4">Voltar</button>
-      <button type="button" class="btn-custom" id="proximoPagina5">Próximo</button>
+      <!-- Botões de navegação -->
+      <div class="nav-buttons">
+        <button type="button" class="btn-custom" id="voltarPagina4">Voltar</button>
+        <button type="button" class="btn-custom" id="proximoPagina5">Próximo</button>
+      </div>
     </div>
   </div>
   
@@ -461,12 +493,9 @@
       return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
     }
     
-    // Recupera o total atual vindo da Página 3 )
-    // Recupera o valor salvo na chave "totalConvidados"
-       var totalConvidados = parseFloat(localStorage.getItem("totalConvidados")) || 0;
-     // Usa a função formatCurrency (já definida) para formatar o valor e exibi-lo
-     document.getElementById("cartValue").innerText = "Valor total dos convidados: " + formatCurrency(totalConvidados);
-
+    // Recupera o total dos convidados (salvo na Página 3) e atualiza o carrinho
+    var totalConvidados = parseFloat(localStorage.getItem("totalConvidados")) || 0;
+    document.getElementById("cartValue").innerText = " Valor parcial do evento: " + formatCurrency(totalConvidados);
     
     // Atualiza a mensagem de opções
     var numConvidados = parseInt(localStorage.getItem("numeroConvidados")) || 0;
@@ -488,7 +517,6 @@
     }
     
     var currentSelected = 0;
-    // Array para armazenar os nomes dos produtos selecionados
     var selectedProducts = [];
     
     function updateAllowedMessage() {
@@ -505,7 +533,6 @@
         if (item.classList.contains("selected")) {
           item.classList.remove("selected");
           currentSelected--;
-          // Remove o produto do array
           var index = selectedProducts.indexOf(productName);
           if (index > -1) {
             selectedProducts.splice(index, 1);
@@ -524,39 +551,27 @@
       });
     });
     
-   window.onload = function() {
-  var editMode = localStorage.getItem("edit_cardapio");
-  
-  if (editMode === "true") {
-    // Modo edição: Oculta o botão "Voltar" e configura o botão "Próximo" para atuar como "Salvar"
-    document.getElementById("voltarPagina4").style.display = "none";
-    
-    var proximoBtn = document.getElementById("proximoPagina5");
-    proximoBtn.innerText = "Salvar";
-
-    proximoBtn.addEventListener("click", function() {
-      // Salva as opções selecionadas e remove a flag de edição
-      localStorage.setItem("selectedOptions", JSON.stringify(selectedProducts));
-      localStorage.removeItem("edit_cardapio");
-      window.location.href = "pagina11.html";
-    });
-
-  } else {
-    // Fluxo normal: configura os botões para navegar normalmente
-    
-    // Botão "Voltar": redireciona para a Página 3
-    document.getElementById("voltarPagina4").addEventListener("click", function() {
-      window.location.href = "pagina3.html";
-    });
-
-    // Botão "Próximo": antes de ir para a Página 5, armazena as opções selecionadas no localStorage
-    document.getElementById("proximoPagina5").addEventListener("click", function() {
-      localStorage.setItem("selectedOptions", JSON.stringify(selectedProducts));
-      window.location.href = "pagina5.html";
-    });
-  }
-};
-
+    window.onload = function() {
+      var editMode = localStorage.getItem("edit_cardapio");
+      if (editMode === "true") {
+        document.getElementById("voltarPagina4").style.display = "none";
+        var proximoBtn = document.getElementById("proximoPagina5");
+        proximoBtn.innerText = "Salvar";
+        proximoBtn.addEventListener("click", function() {
+          localStorage.setItem("selectedOptions", JSON.stringify(selectedProducts));
+          localStorage.removeItem("edit_cardapio");
+          window.location.href = "pagina11.html";
+        });
+      } else {
+        document.getElementById("voltarPagina4").addEventListener("click", function() {
+          window.location.href = "pagina3.html";
+        });
+        document.getElementById("proximoPagina5").addEventListener("click", function() {
+          localStorage.setItem("selectedOptions", JSON.stringify(selectedProducts));
+          window.location.href = "pagina5.html";
+        });
+      }
+    };
   </script>
   
   <style>
