@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
@@ -6,35 +6,38 @@
   <title>Pine Tree Farm - Empratados</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
   <style>
-    /* Preenche toda a tela */
+    /* Body: define a imagem de fundo que cobre toda a página */
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
+      width: 100%;
+      min-height: 100%;
       font-family: 'Roboto', sans-serif;
-      background-color: #F9F9F9;
-      background: rgba(106, 190, 155, 0.1);
-      background-image: linear-gradient(white, white), linear-gradient(145deg, #FFD700, #6DBF79);
-      background-origin: border-box;
-      background-clip: content-box, border-box;
+      background: url("fundo de pagina.png") no-repeat center center fixed;
+      background-size: cover;
       overflow-x: hidden;
     }
+    /* Wrapper: envolve todo o conteúdo e aplica a borda com gradiente */
+    .wrapper {
+      width: 100%;
+      min-height: 100vh;
+      box-sizing: border-box;
+      border: 5px solid transparent;
+      border-image: linear-gradient(90deg, #05bddc, #FFD700) 1;
+    }
+    /* Container: centraliza o conteúdo; fundo transparente para exibir a imagem do body */
     .container {
       position: relative;
       margin: 20px auto;
       padding: 20px;
       max-width: 1200px;
-      background-color: #fff;
-      background-image: url("fundo de pagina.png");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      box-shadow: 0 0 15px rgba(255,215,0,0.6);
-      border: 5px solid transparent;
       border-radius: 15px;
-      border-image: linear-gradient(90deg, #05bddc, #FFD700) 1;
+      background: transparent;  /* fundo transparente */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    /* Título da página com estilo similar à Página 4 */
+    /* Título */
     .title-wrapper {
       text-align: center;
       width: 100%;
@@ -50,28 +53,51 @@
       margin: 80px auto 20px;
       text-shadow: 2px 2px 3px rgba(0,0,0,0.2);
     }
-    /* Tela de atenção (alerta) */
+    /* Carrinho */
+    #cartContainer {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: #FFD700;
+      color: #000;
+      padding: 10px 15px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #cartContainer span {
+      margin-left: 5px;
+    }
+    /* Tela de atenção atualizada */
     #atencao {
-      margin: 20px auto;
-      max-width: 700px;
       background-color: #FFF3CD;
       border: 1px solid #FFEEBA;
-      padding: 15px;
+      padding: 10px;
       border-radius: 8px;
-      font-size: 0.95rem;
-      color: #856404;
-      text-align: left;
-    }
-    /* Grid de empratados */
-    .row {
       margin-top: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 1.2rem;
+      color: #856404;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin: 30px 0 20px;
+      background-color: #00692e;
+      color: #fff;
+      padding: 10px;
+      border-radius: 8px;
     }
     .product-item {
       margin-bottom: 40px;
       text-align: center;
       padding: 15px;
       border-radius: 8px;
-      transition: border 0.3s;
       cursor: pointer;
     }
     .product-item.selected {
@@ -85,6 +111,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      cursor: pointer;
       position: relative;
       background-color: #00692e;
       border-radius: 8px;
@@ -136,24 +163,6 @@
       background: linear-gradient(90deg, #00692e, #05bddc);
       box-shadow: 0 5px 10px rgba(0,0,0,0.2);
     }
-    /* Carrinho no canto superior direito */
-    #cartContainer {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background-color: #FFD700;
-      color: #000;
-      padding: 10px 15px;
-      border-radius: 50%;
-      font-size: 1.2rem;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    #cartContainer span {
-      margin-left: 5px;
-    }
     @media (max-width:768px) {
       #cartContainer {
         top: 10px;
@@ -164,89 +173,82 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Carrinho -->
-    <div id="cartContainer">
-      🛒 <span id="cartValue"></span>
-    </div>
-    
-    <!-- Título da página -->
-    <div class="title-wrapper">
-      <div class="page-title">Empratados</div>
-    </div>
-    
-    <!-- Tela de atenção -->
-    <div id="atencao">
-      <p><strong>Atenção</strong></p>
-      <p>Você pode selecionar até <strong>2 empratados</strong>.</p>
-    </div>
-    
-    <!-- Grid de empratados -->
-    <div class="row">
-      <!-- Item 1 -->
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
-        </div>
-        <div class="product-name">Estrogonofe de frango, arroz e batata palha</div>
+  <div class="wrapper">
+    <div class="container">
+      <!-- Carrinho -->
+      <div id="cartContainer">
+        🛒 <span id="cartValue"></span>
       </div>
-      <!-- Item 2 -->
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
-        </div>
-        <div class="product-name">Estrogonofe de filé de carne, arroz e batata palha</div>
+      <!-- Título da página -->
+      <div class="title-wrapper">
+        <div class="page-title">Empratados</div>
       </div>
-      <!-- Item 3 -->
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
-        </div>
-        <div class="product-name">Mini penne bolonhesa</div>
+      <!-- Tela de atenção -->
+      <div id="atencao">
+        <p><strong>Atenção</strong></p>
+        <p>Você pode selecionar até <strong>2 empratados</strong>.</p>
       </div>
-      <!-- Item 4 -->
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+      <!-- Grid de empratados -->
+      <div class="row">
+        <!-- Item 1 -->
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Estrogonofe de filé de frango, arroz e batata palha.jpg" alt="Estrogonofe de filé de frango, arroz e batata palha">
+          </div>
+          <div class="product-name">Estrogonofe de filé de frango, arroz e batata palha</div>
         </div>
-        <div class="product-name">Mini penne quatro queijos</div>
-      </div>
-      <!-- Item 5 -->
-      <div class="col-md-4 product-item">
-        <div class="photo-upload">
-          <input type="file" accept="image/*" disabled>
-          <span>Upload</span>
+        <!-- Item 2 -->
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <input type="file" accept="image/*" disabled>
+            <img src="c:\Users\Daniela Nunes\Desktop\formulario\cardapio\Estrogonofe de filé bovino, arroz e batata palha.jpg" alt="Estrogonofe de filé bovino, arroz e batata palha">
+          </div>
+          <div class="product-name">Estrogonofe de filé bovino, arroz e batata palha</div>
         </div>
-        <div class="product-name">Mini penne molho sugo com manjericão</div>
+        <!-- Item 3 -->
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <input type="file" accept="image/*" disabled>
+            <span>Upload</span>
+          </div>
+          <div class="product-name">Mini penne à bolonhesa</div>
+        </div>
+        <!-- Item 4 -->
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <input type="file" accept="image/*" disabled>
+            <span>Upload</span>
+          </div>
+          <div class="product-name">Mini penne quatro queijos</div>
+        </div>
+        <!-- Item 5 -->
+        <div class="col-md-4 product-item">
+          <div class="photo-upload">
+            <input type="file" accept="image/*" disabled>
+            <span>Upload</span>
+          </div>
+          <div class="product-name">Mini penne ao molho sugo com manjericão</div>
+        </div>
       </div>
-    </div>
-    
-    <!-- Botões de navegação -->
-    <div class="nav-buttons">
-      <button type="button" class="btn-custom" id="voltarPagina6">Voltar</button>
-      <button type="button" class="btn-custom" id="proximoPagina7">Próximo</button>
+      <!-- Botões de navegação -->
+      <div class="nav-buttons">
+        <button type="button" class="btn-custom" id="voltarPagina6">Voltar</button>
+        <button type="button" class="btn-custom" id="proximoPagina7">Próximo</button>
+      </div>
     </div>
   </div>
   
   <script>
-    // Função para formatar valores no padrão brasileiro
+    // Função para formatar valores para o padrão brasileiro
     function formatCurrency(value) {
       return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
     }
     
-    // Recupera o total atual vindo da Página 5 (armazenado na chave "totalEvento")
+    // Recupera o total atual e atualiza o carrinho
     var currentTotal = parseFloat(localStorage.getItem("totalEvento")) || 0;
-    
-    // Salva o total original (antes do investimento) se ainda não estiver salvo
     if (!localStorage.getItem("totalBeforeEmpratados")) {
       localStorage.setItem("totalBeforeEmpratados", currentTotal.toFixed(2));
     }
-    
-    // Se o usuário veio pelo caminho SIM (cameFrom == "6"), aplica o investimento
     if (localStorage.getItem("cameFrom") === "6" && !localStorage.getItem("empratadosAdded")) {
       var numConvidados = parseInt(localStorage.getItem("numeroConvidados")) || 0;
       var investimento = 0;
@@ -264,14 +266,12 @@
       localStorage.setItem("empratadosAdded", "true");
     }
     
-    // Atualiza o carrinho com o valor atualizado usando o padrão brasileiro
     var investimentoEmpratados = parseFloat(localStorage.getItem("investimentoEmpratados")) || 0;
     var totalEventoCart = parseFloat(localStorage.getItem("totalEventoCart")) || 0;
     var somaTotal = investimentoEmpratados + totalEventoCart;
-    document.getElementById("cartValue").innerText = "Valor total da compra: " + formatCurrency(somaTotal);
-
+    document.getElementById("cartValue").innerText = "Valor parcial do evento: " + formatCurrency(somaTotal);
     
-    // Código para seleção dos empratados (limite 2) e armazenamento das opções selecionadas
+    // Seleção dos empratados (limite 2)
     var allowedOptions = 2;
     var currentSelected = 0;
     var selectedEmpratados = [];
@@ -298,11 +298,9 @@
       });
     });
     
-    // Configuração dos botões de navegação com verificação do modo edição
     window.onload = function() {
       var editMode = localStorage.getItem("edit_empratados");
       if (editMode === "true") {
-        // Em modo edição: "Voltar" retorna para a Página 11 e "Próximo" atua como "Salvar"
         document.getElementById("voltarPagina6").addEventListener("click", function() {
           var totalBefore = localStorage.getItem("totalBeforeEmpratados");
           if (totalBefore) {
@@ -319,7 +317,6 @@
           window.location.href = "pagina11.html";
         });
       } else {
-        // Fluxo normal: "Voltar" retorna para a Página 5 e "Próximo" vai para a Página 7
         document.getElementById("voltarPagina6").addEventListener("click", function() {
           var totalBefore = localStorage.getItem("totalBeforeEmpratados");
           if (totalBefore) {
